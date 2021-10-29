@@ -1,4 +1,5 @@
 .vscode/
+tmp/
 
 CMakeLists.txt.user
 CMakeCache.txt

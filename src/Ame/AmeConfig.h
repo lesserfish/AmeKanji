@@ -15,5 +15,6 @@ namespace Ame
         const char *ErrorAudio;
         const char *ErrorMD5;
         const char *humanOutput;
+        const char *ignoreConfigurationFile;
     };
 }

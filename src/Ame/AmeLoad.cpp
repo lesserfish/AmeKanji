@@ -15,8 +15,9 @@ namespace Ame
         argParser.generateArgument(configInstance.inputFile, "-input", true, true, "", false);
         argParser.generateArgument(configInstance.outputFile, "-output", false, true, "New Anki Deck.txt", true);
         argParser.generateArgument(configInstance.configurationFile, "-config", false, true, "Config/config.cfg", true);
-        argParser.generateArgument(configInstance.logFile, "-logFile", false, true, "Log.txt", true);
+        argParser.generateArgument(configInstance.logFile, "-log", false, true, "Log.txt", true);
         argParser.generateArgument(configInstance.Tag, "-tag", false, true, "", true);
+        argParser.generateArgument(configInstance.ignoreConfigurationFile, "-ignoreConfig", false, false, "true", false);
 
 
         int parseOutput = argParser.Parse(argc, argv);
@@ -42,7 +43,7 @@ namespace Ame
 
         Core::ConfigParser configParser;
 
-        configParser.generateArgument(configInstance.logFile, "logFile", false);
+        configParser.generateArgument(configInstance.logFile, "Log", false);
         configParser.generateArgument(configInstance.Tag, "Tag", false);
 
         int configOutput = configParser.Parse(configInstance.configurationFile, "=", false);
