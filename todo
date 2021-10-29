@@ -1,4 +1,4 @@
-1- Add a function which reads a file "scheme.txt" and formats out variables of the formats
+1- Add a function which reads a file "template.txt" and formats out variables of the formats
     @definition
     @hiragana
     @kanji
@@ -12,3 +12,17 @@
     Audio files
 
 4- Create a function to pass all that into a text file
+
+
+
+
+Template:
+<?xml version="1.0" encoding="UTF-8">
+<template>
+    <field>
+        Kanji Writing: @kanji
+        Hiragana Writing: @hiragana
+
+        The level difficulty of this card is: @JLPTLVL
+    </field>
+</template>
