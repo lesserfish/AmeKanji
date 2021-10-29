@@ -1,0 +1,14 @@
+1- Add a function which reads a file "scheme.txt" and formats out variables of the formats
+    @definition
+    @hiragana
+    @kanji
+    @JLPTLVL
+    etc...
+
+2- Create a function which, given a list of words and a list of variables obtained in 1), reads an XML file looking for the corresponding info and stores it into a list.
+
+3- Create a function to download the remaining information out of the internet, if needed! This includes
+    Kanji stroke order
+    Audio files
+
+4- Create a function to pass all that into a text file
