@@ -1,6 +1,7 @@
 #include "Ame.h"
 #include <iostream>
 #include <assert.h>
+#include "outputMessages.h"
 
 namespace Ame
 {
