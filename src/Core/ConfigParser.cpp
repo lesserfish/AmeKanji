@@ -1,6 +1,7 @@
-#include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
+#include <iostream>
 #include <boost/tokenizer.hpp>
 #include "ConfigParser.h"
 
@@ -23,12 +24,12 @@ namespace Core
             free(val);
         }
     }
-    void ConfigParser::generateArgument(const char *&output, const char *name, bool required)
+    void ConfigParser::generateArgument(std::string &output, const char *name, bool required)
     {
         Argument *arg = new Argument{output, name, required};
         argList.push_back(arg);
     }
-    int ConfigParser::Parse(const char *file, const char *separator, bool assertArgument)
+    int ConfigParser::Parse(std::string file, std::string separator, bool assertArgument)
     {
         std::vector<Argument *> missingParameters = argList;
 
@@ -37,7 +38,6 @@ namespace Core
 
         if(!inputFile)
         {
-            std::cout << "Failed reading file!";
             return configParseOutput::cpo_MISSING_FILE;
         }
         else
@@ -46,38 +46,23 @@ namespace Core
             while (getline(inputFile, Line))
             {
                 
-                std::vector<std::string> splitLine;
+                bool argFound = false;
                 
-                boost::char_separator<char> sep(separator);
-                boost::tokenizer<boost::char_separator<char>> tok{Line, sep};
+                int index = Line.find(separator);
 
-                for(const auto &t : tok)
-                {
-                    std::string l = std::string(t);
-                    splitLine.push_back(l);
-                }
-                
-                if(splitLine.size() < 2)
+                if(index == std::string::npos || index >= Line.length() - 1)
                     continue;
                 
-                
-                const char *val = splitLine.at(0).c_str();
+                std::string name = Line.substr(0, index);
+                std::string value = Line.substr(index + 1, Line.length());
 
-                bool argFound = false;
 
                 for(int i = 0; i < missingParameters.size(); i++)
                 {
                     Argument *arg = missingParameters.at(i);
-                    if(std::string(val) == std::string(arg->name))
+                    if(name == arg->name)
                     {
-                        std::string *soutput = new std::string("");
-                        for(int j = 1; j < splitLine.size(); j++)
-                        {
-                            *soutput = *soutput + std::string(separator) + splitLine.at(j);
-                        }
-                        
-                        valList.push_back(soutput);
-                        arg->output = soutput->c_str(); 
+                        arg->output = value;
                         missingParameters.erase(missingParameters.begin() + i);
                         argFound = true;
                         break;
@@ -91,6 +76,52 @@ namespace Core
         
         inputFile.close();
 
+        for (int i = 0; i < missingParameters.size(); i++)
+        {
+            Argument *arg = missingParameters.at(i);
+            if (arg->required == true)
+                return configParseOutput::cpo_MISSING_REQUIRED_PARAMETER;
+        }
+        
+        return configParseOutput::cpo_SUCCESS;
+    }
+    
+    int ConfigParser::ParseFromString(std::string Content, std::string separator, bool assertArgument)
+    {
+        std::vector<Argument *> missingParameters = argList;
+
+        std::istringstream ContentStream(Content);
+
+        std::string Line;
+        while (getline(ContentStream, Line))
+        {
+            bool argFound = false;
+            
+            int index = Line.find(separator);
+
+            if(index == std::string::npos || index >= Line.length() - 1)
+                continue;
+                
+            std::string name = Line.substr(0, index);
+            std::string value = Line.substr(index + 1, Line.length());
+
+
+            for(int i = 0; i < missingParameters.size(); i++)
+            {
+                Argument *arg = missingParameters.at(i);
+                if(name == arg->name)
+                {
+                    arg->output = value;
+                    missingParameters.erase(missingParameters.begin() + i);
+                    argFound = true;
+                    break;
+                }
+            }
+
+            if(!argFound & assertArgument)
+                return configParseOutput::cpo_ADDITIONAL_PARAMETER_GIVEN;
+        }
+        
         for (int i = 0; i < missingParameters.size(); i++)
         {
             Argument *arg = missingParameters.at(i);

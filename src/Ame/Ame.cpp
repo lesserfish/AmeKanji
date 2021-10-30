@@ -6,22 +6,17 @@
 
 namespace Ame
 {
+    Ame::Ame() : configInstance()
+    {
+        std::cout << "Ame Initialized!\n";
+    }
     Ame::Ame(int argc, char **argv) : configInstance()
     {
-        std::cout << "Initializing Ame!\n";
-
-        int loadOutput = Load(argc, argv);
-
-        assert(loadOutput == 0);
-
-        if(configInstance.configurationFile != NULL);
-        {
-            if(std::strcmp(configInstance.configurationFile, "") != 0)
-            {
-                int configOutput = loadConfigurationFile();
-                assert(configOutput == 0);
-            }
-        }
-
+        std::cout << "Ame Initialized!\n";
+        loadArgs(argc, argv);   
+    }
+    void Ame::printConfiguration()
+    {
+        std::cout << configInstance;
     }
 }

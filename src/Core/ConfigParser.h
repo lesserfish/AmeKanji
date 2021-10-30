@@ -18,13 +18,14 @@ namespace Core{
         public:
             ConfigParser();
             ~ConfigParser();
-            void generateArgument(const char *&output, const char *name, bool required = false);
-            int Parse(const char *file, const char *separator = "=", bool assertArgument = false);
+            void generateArgument(std::string &output, const char *name, bool required = false);
+            int Parse(std::string file, std::string = "=", bool assertArgument = false);
+            int ParseFromString(std::string Content, std::string separator = "=", bool assertArgument = false);
         private:
 
         struct Argument
         {
-            const char *&output;
+            std::string &output;
             const char* name;
             bool required;
         };

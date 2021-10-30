@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AmeConfig.h"
+#include <string>
 
 namespace Ame
 {
@@ -8,11 +9,25 @@ namespace Ame
     {
         public:
             Ame(int argc, char **argv);
-        private:
-            int Load(int argc, char **argv);
-            int loadConfigurationFile();
-            int assertRequiredConfig();
+            Ame();
+
+            int loadArgs(int argc, char **argv);
+
+            int loadConfigurationFromString(std::string config = "");
+            int loadConfigurationFromFile(std::string file = "");
+
+            int preRunChecklist();
             int Run();
+
+
+            int loadTemplateFromFile(std::string file = "");
+            int loadTemplateFromString(std::string cTemplate);
+
+            int loadWordlistFromFile(std::string file = "");
+            int loadWordlistFromString(std::string cWordlist);
+
+            void printConfiguration();
+        private:
             AmeConfig configInstance;
     };
 }

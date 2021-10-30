@@ -15,7 +15,7 @@ namespace Core
             free(arg);
         }
     }
-    void ArgsParser::generateArgument(const char *&output, const char *name, bool required, bool requiresInput, const char *defaultInput, bool copyDefaultInput)
+    void ArgsParser::generateArgument(std::string &output, const char *name, bool required, bool requiresInput, const char *defaultInput, bool copyDefaultInput)
     {
         Argument *arg = new Argument{output, name, required, requiresInput, defaultInput, copyDefaultInput};
         argList.push_back(arg);
