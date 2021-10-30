@@ -12,5 +12,7 @@ namespace Ame
             Kanji getKanjiInformation(std::string Kanji);
         private:
             int getKanjiJISX0208Code(std::string Kanji);
+            pugi::xml_document XMLDoc;
+            std::string UTF8Doc;
     };
 }

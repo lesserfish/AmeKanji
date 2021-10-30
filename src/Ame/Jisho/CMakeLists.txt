@@ -1,4 +1,4 @@
-set(SOURCE_FILES Dictionary.cpp Library.cpp JMDict.cpp Kanjidict.cpp)
+set(SOURCE_FILES Dictionary.cpp Library.cpp Vocabdict.cpp Kanjidict.cpp)
 
 find_library(PugiXML NAMES pugixml REQUIRED)
 
