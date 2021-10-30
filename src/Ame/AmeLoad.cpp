@@ -28,7 +28,6 @@ namespace Ame
         if(parseOutput != Core::parseOutput::po_SUCCESS)
         {
             //TODO: HANDLE ERROR PROPERLY
-            std::cout << "Error! The argument parser failed!\n";
             switch(parseOutput)
             {
                 case Core::parseOutput::po_ADDITIONAL_PARAMETER_GIVEN: output = ameError::ame_ARGPARSER_ADDITIONAL_PARAMETER_GIVEN;
