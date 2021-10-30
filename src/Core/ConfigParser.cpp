@@ -24,7 +24,7 @@ namespace Core
             free(val);
         }
     }
-    void ConfigParser::generateArgument(std::string &output, const char *name, bool required)
+    void ConfigParser::generateArgument(std::string &output, std::string name, bool required)
     {
         Argument *arg = new Argument{output, name, required};
         argList.push_back(arg);

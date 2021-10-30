@@ -18,7 +18,7 @@ namespace Core{
         public:
             ConfigParser();
             ~ConfigParser();
-            void generateArgument(std::string &output, const char *name, bool required = false);
+            void generateArgument(std::string &output, std::string name, bool required = false);
             int Parse(std::string file, std::string = "=", bool assertArgument = false);
             int ParseFromString(std::string Content, std::string separator = "=", bool assertArgument = false);
         private:
@@ -26,7 +26,7 @@ namespace Core{
         struct Argument
         {
             std::string &output;
-            const char* name;
+            std::string name;
             bool required;
         };
 

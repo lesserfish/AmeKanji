@@ -29,7 +29,7 @@ namespace Ame
                                     omsg(AME_OUTPUT_MESSAGES::I_LD_CFG ,"I!LD_FRM_CFG", "Loading from Config!")};
 
 
-    static void printOutputMessage(AME_OUTPUT_MESSAGES Message, bool robotReadable = false, const char *end = "\n")
+    static void printOutputMessage(AME_OUTPUT_MESSAGES Message, bool robotReadable = false, std::string end = "\n")
     {
         std::string outMsg = "";
         int messageCount = outMessages.size();
@@ -39,7 +39,7 @@ namespace Ame
             if(Message == std::get<0>(outMessages[i]))
             {
                 outMsg = robotReadable ? std::string(std::get<1>(outMessages[i])) : std::string(std::get<2>(outMessages[i]));
-                outMsg = outMsg + std::string(end);
+                outMsg = outMsg + end;
 
                 std::cout << outMsg;
                 return;
@@ -62,7 +62,7 @@ namespace Ame
             if(Message == std::get<0>(outMessages[i]))
             {
                 outMsg = humanReadable ? std::string(std::get<2>(outMessages[i])) : std::string(std::get<1>(outMessages[i]));
-                outMsg = outMsg + std::string(end);
+                outMsg = outMsg + end;
 
                 std::cout << outMsg;
                 return;
