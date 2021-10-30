@@ -15,7 +15,7 @@ namespace Core
             free(arg);
         }
     }
-    void ArgsParser::generateArgument(std::string &output, const char *name, bool required, bool requiresInput, const char *defaultInput, bool copyDefaultInput)
+    void ArgsParser::generateArgument(std::string &output, std::string name, bool required, bool requiresInput, std::string defaultInput, bool copyDefaultInput)
     {
         Argument *arg = new Argument{output, name, required, requiresInput, defaultInput, copyDefaultInput};
         argList.push_back(arg);
@@ -26,20 +26,20 @@ namespace Core
         int position = 0;
         while (++position < argc)
         {
-            const char *val = argv[position];
+		std::string val = argv[position];
 
             bool argFound = false;
             for (int i = 0; i < missingParameters.size(); i++)
             {
                 Argument *arg = missingParameters.at(i);
-                if (std::string(val) == std::string(arg->name))
+                if (val == arg->name)
                 {
                     if (arg->requiresInput)
                     {
                         if (++position >= argc)
                             return parseOutput::po_MISSING_INPUT;
                         
-                        arg->output = argv[position];
+                        arg->output = std::string(argv[position]);
                         missingParameters.erase(missingParameters.begin() + i);
                         argFound = true;
                         break;
