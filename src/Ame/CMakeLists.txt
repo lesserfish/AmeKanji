@@ -9,4 +9,4 @@ find_library(PugiXML NAMES pugixml REQUIRED)
 
 add_library(Ame ${SOURCE_FILES})
 
-target_link_libraries(Ame Core ${pugiXML})
+target_link_libraries(Ame Core Jisho ${pugiXML})
