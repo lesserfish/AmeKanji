@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Dictionary.h"
+#include "../Word.h"
 
 namespace Ame
 {
@@ -8,6 +9,8 @@ namespace Ame
     {
         public:
             JMDict();
+            Word getWordInformation(std::string Kanji);
+            Word getWordiinformation(std::string Kanji, std::string Katakana);
         private:
     };
 }
