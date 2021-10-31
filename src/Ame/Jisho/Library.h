@@ -1,5 +1,8 @@
 #pragma once
 
+ #include "../AmeConfig.h"
+
+
 namespace Ame
 {
 
@@ -8,6 +11,10 @@ namespace Ame
     {
         public:
             AmeLibrary();
+            AmeLibrary(AmeConfig config);
+            void loadConfiguration(AmeConfig config);
+            
         private:
+            AmeConfig configInstance;
     };
 }
