@@ -27,6 +27,8 @@ namespace Ame
             int loadWordlistFromString(std::string cWordlist);
 
             void printConfiguration();
+
+            void debug();
         private:
             AmeConfig configInstance;
     };

@@ -2,9 +2,10 @@
 
 namespace Ame
 {
-    AmeLibrary::AmeLibrary(AmeConfig& config) : configInstance(config){}
-    void AmeLibrary::loadConfiguration(AmeConfig &config)
+    AmeLibrary::AmeLibrary(const AmeConfig& config) : configInstance(config){}
+    void AmeLibrary::debug()
     {
-        configInstance = config;
+        std::cout << "Debug: ";
+        std::cout << configInstance.inputFile << std::endl;
     }
 }

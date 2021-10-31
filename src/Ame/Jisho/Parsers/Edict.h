@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Dictionary.h"
-#include "../../Word.h"
+#include "../../Cards/Word.h"
 
 namespace Ame
 {

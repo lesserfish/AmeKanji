@@ -2,6 +2,8 @@
 
 #include "../AmeConfig.h"
 
+// How should we store all of the different Parsers? On a huge big list? On a dictionary with enumeration?
+// Should we store them by return type?
 
 namespace Ame
 {
@@ -10,11 +12,9 @@ namespace Ame
     class AmeLibrary
     {
         public:
-            AmeLibrary();
-            AmeLibrary(AmeConfig &config);
-            void loadConfiguration(AmeConfig &config);
-            
+            AmeLibrary(const AmeConfig &config);
+            void debug(); 
         private:
-            AmeConfig &configInstance;
+            const AmeConfig &configInstance;
     };
 }
