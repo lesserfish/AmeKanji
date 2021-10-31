@@ -1,9 +1,9 @@
 #include "Ame/Jisho/Vocabdict.h"
 #include "Core/ArgsParser.h"
 #include "Ame/Ame.h"
+#include "Ame/Regex/Regex.h"
 #include <assert.h>
 #include <iostream>
-#include "Ame/Jisho/Regex/Regex.h"
 #include <vector>
 #include <string>
 

@@ -93,7 +93,7 @@ namespace Ame
         return output;
     }
 
-    int Dictionary::loadUTF8FromFile(std::string file)
+    int Dictionary::loadTXTRegexFromFile(std::string file)
     {
         int output = 0;
 
