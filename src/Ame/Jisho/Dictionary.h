@@ -2,7 +2,7 @@
 
 #include <string>
 #include <pugixml.hpp>
-#include "../Regex/Regex.h"
+#include "../../Core/Regex/Regex.h"
 
 
 namespace Ame

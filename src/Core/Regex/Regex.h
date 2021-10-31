@@ -4,7 +4,7 @@
 #include <vector>
 #include <regex>
 
-namespace Ame
+namespace Core 
 {
     enum regOP{MATCH, SEARCH, REPLACE};
     struct RegexInstruction
@@ -23,7 +23,6 @@ namespace Ame
         std::vector<RegexInstruction> regexOrder;
     };
 
-    //std::vector<std::string> ParseRegex(RegexOrder order, std::string Target);
     static const inline std::vector<std::string> ParseRegex(RegexOrder order, std::string Target)
     {
         std::vector<std::string> output;
