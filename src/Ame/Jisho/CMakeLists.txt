@@ -1,7 +1,8 @@
-set(SOURCE_FILES Dictionary.cpp Library.cpp Vocabdict.cpp Kanjidict.cpp)
+set(SOURCE_FILES Library.cpp)
 
-find_library(PugiXML NAMES pugixml REQUIRED)
+add_subdirectory(Parsers)
+
 
 add_library(Jisho ${SOURCE_FILES})
 
-target_link_libraries(Jisho ${PugiXML})
+target_link_libraries(Jisho Parsers)

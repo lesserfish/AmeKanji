@@ -1,4 +1,3 @@
-#include "Ame/Jisho/Vocabdict.h"
 #include "Core/ArgsParser.h"
 #include "Ame/Ame.h"
 #include "Core/Regex/Regex.h"
