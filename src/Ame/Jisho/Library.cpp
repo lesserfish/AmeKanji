@@ -2,7 +2,7 @@
 
 namespace Ame
 {
-    AmeLibrary::AmeLibrary(const AmeConfig& config) : configInstance(config){}
+    AmeLibrary::AmeLibrary(const AmeConfig& config) : configInstance(config), mode(CardMode::None), parser(ParserMode::None){}
     void AmeLibrary::debug()
     {
         std::cout << "Debug: ";
