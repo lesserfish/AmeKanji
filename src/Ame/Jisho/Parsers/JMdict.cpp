@@ -57,7 +57,7 @@ namespace Ame
     {
         if(Input.size() < 1) 
             return ame_result{false, statusCode::parser_ERR_MISSING_ARGUMENTS, "Missing arguments! Please provide the kanji of the required word!"};
-        if(Args.size() == 1)
+        else if(Input.size() == 1)
             return getWordInformation(output, Input[0], Args);
         else
             return getWordInformation(output, Input[0], Input[1], Args); 

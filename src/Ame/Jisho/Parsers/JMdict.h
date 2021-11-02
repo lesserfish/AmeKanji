@@ -13,11 +13,6 @@ namespace Ame
     {
         public:
             JMdict();
-            ame_result getWordInformation(Word &output, std::string Kanji, std::vector<std::string> Args = {});
-            ame_result getWordInformation(Word &output, std::string Kanji, std::string Katakana, std::vector<std::string> Args = {});
-
-            // Do this??
-
             template<class T>
             ame_result getInformation(T &output, std::vector<std::string> Input = {}, std::vector<std::string> Args = {});
             
@@ -28,7 +23,9 @@ namespace Ame
 
             ame_result generateRegexInstance();
         private:
-            pugi::xml_document XMLDoc;
+            ame_result getWordInformation(Word &output, std::string Kanji, std::vector<std::string> Args = {});
+            ame_result getWordInformation(Word &output, std::string Kanji, std::string Katakana, std::vector<std::string> Args = {});pugi::xml_document XMLDoc;
+            
             const char * root_name;
             const char * entry_name;
             const char * ent_seq_name;

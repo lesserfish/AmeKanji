@@ -43,7 +43,7 @@ int main(int argc, char **argv)
     Ame::ame_result o = jm.getInformation(w, {"開ける", "ひらける"});
     std::cout << "Result: " << o.Message << std::endl;
     std::cout << w;
-    o = jm.getWordInformation(w, {"開ける"});
+    o = jm.getInformation(w, {"開ける"});
     std::cout << "Result: " << o.Message << std::endl;
     std::cout << w;
 }
