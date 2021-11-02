@@ -401,6 +401,12 @@ namespace Ame
         return o;
     }
 
+    regex_output JMdict::applyRegex(Word &input)
+    {
+        regex_output o{"Error!"};
+        
+        return o;
+    }
     int JMdict::generateRegexInstance(){
         return 0;
     }

@@ -19,6 +19,10 @@ namespace Ame
         parse_result result;
         std::string Message;
     };
+    struct regex_output
+    {
+        std::string Message;
+    };
     
     class Dictionary
     {

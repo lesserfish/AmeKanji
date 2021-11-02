@@ -15,6 +15,8 @@ namespace Ame
             parse_output getWordInformation(Word &output, std::string Kanji, std::vector<std::string> Args = {});
             parse_output getWordInformation(Word &output, std::string Kanji, std::string Katakana, std::vector<std::string> Args = {});
             
+            regex_output applyRegex(Word &input);
+            
             int loadDictionaryFromFile(std::string file);
             int loadDictionaryFromString(std::string content);
 

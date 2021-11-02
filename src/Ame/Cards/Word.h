@@ -68,6 +68,16 @@ namespace Ame
                 std::string value;
             };
 
+            struct MEDIA
+            {
+                struct AUDIO
+                {
+                    std::string value;
+                };
+                AUDIO Audio;
+            };
+            
+            MEDIA Media;
             ENT_SEQ ent_seq;
             std::vector<K_ELE> K_ELE_List;
             std::vector<R_ELE> R_ELE_List;

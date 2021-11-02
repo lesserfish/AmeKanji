@@ -136,6 +136,17 @@ namespace Ame
                 std::vector<NANORI> NANORI_List;
             };
 
+            struct MEDIA
+            {
+                struct RADICAL
+                {
+                    std::string value;
+                };
+
+                RADICAL Radical;
+            };
+
+            MEDIA Media;
             LITERAL Literal;
             CODEPOINT Codepoint;
             RADICAL Radical;
