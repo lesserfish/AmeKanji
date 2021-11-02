@@ -8,63 +8,72 @@ namespace Ame
         std::string output = "";
         return output;
     }
-    void Word::Print()
+    std::string Word::Print() const
     {
-        std::cout << "Entry sequence: " << ent_seq.value << std::endl;
-        std::cout << "K_Elemenets: " << std::endl;
-        for(Ame::Word::K_ELE& kele : K_ELE_List)
+        std::string output;
+        output = output +  "Entry sequence: " + ent_seq.value + "\n";
+        output = output +  "K_Elemenets: " + "\n";
+        for(Ame::Word::K_ELE kele : K_ELE_List)
         {
-            std::cout << "\tKEB Elements: " << std::endl;
-            for(Ame::Word::K_ELE::KEB &keb : kele.KEB_List)
+            output = output +  "\tKEB Elements: " + "\n";
+            for(Ame::Word::K_ELE::KEB keb : kele.KEB_List)
             {
-                std::cout << "\t\tValue: " << keb.value << std::endl;
+                output = output +  "\t\tValue: " + keb.value + "\n";
             }
-            std::cout << "\tK_INF Elements: " << std::endl;
-            for(Ame::Word::K_ELE::KE_INF& kinf : kele.KE_INF_List)
+            output = output +  "\tK_INF Elements: " + "\n";
+            for(Ame::Word::K_ELE::KE_INF kinf : kele.KE_INF_List)
             {
-                std::cout << "\t\tValue: " << kinf.value << std::endl;
+                output = output +  "\t\tValue: " + kinf.value + "\n";
             }
-            std::cout << "\tK_PRI Elements: " << std::endl;
-            for(Ame::Word::K_ELE::KE_PRI& kpri : kele.KE_PRI_List)
+            output = output +  "\tK_PRI Elements: " + "\n";
+            for(Ame::Word::K_ELE::KE_PRI kpri : kele.KE_PRI_List)
             {
-                std::cout << "\t\tValue: " << kpri.value << std::endl;
+                output = output +  "\t\tValue: " + kpri.value + "\n";
             }
-            std::cout << std::endl;
+            output = output +  "\n";
         }
-        std::cout << "R_Elements: " << std::endl;
-        for(Ame::Word::R_ELE& rele : R_ELE_List)
+        output = output +  "R_Elements: " + "\n";
+        for(Ame::Word::R_ELE rele : R_ELE_List)
         {
-            std::cout << "\tREB Elements: " << std::endl;
-            for(Ame::Word::R_ELE::REB &reb : rele.REB_List)
+            output = output +  "\tREB Elements: " + "\n";
+            for(Ame::Word::R_ELE::REB reb : rele.REB_List)
             {
-                std::cout << "\t\tValue: " << reb.value << std::endl;
+                output = output +  "\t\tValue: " + reb.value + "\n";
             }
-            std::cout << "\tR_INF Elements: " << std::endl;
-            for(Ame::Word::R_ELE::RE_INF& rinf : rele.RE_INF_List)
+            output = output +  "\tR_INF Elements: " + "\n";
+            for(Ame::Word::R_ELE::RE_INF rinf : rele.RE_INF_List)
             {
-                std::cout << "\t\tValue: " << rinf.value << std::endl;
+                output = output +  "\t\tValue: " + rinf.value + "\n";
             }
-            std::cout << "\tR_PRI Elements: " << std::endl;
-            for(Ame::Word::R_ELE::RE_PRI& rpri : rele.RE_PRI_List)
+            output = output +  "\tR_PRI Elements: " + "\n";
+            for(Ame::Word::R_ELE::RE_PRI rpri : rele.RE_PRI_List)
             {
-                std::cout << "\t\tValue: " << rpri.value << std::endl;
+                output = output +  "\t\tValue: " + rpri.value + "\n";
             }
-            std::cout << std::endl;
+            output = output +  "\n";
         }
-        std::cout << "SENSE Elements: " << std::endl;
-        for(Ame::Word::SENSE& sense : SENSE_List)
+        output = output +  "SENSE Elements: " + "\n";
+        for(Ame::Word::SENSE sense : SENSE_List)
         {
-            std::cout << "\tPOS Elements: " << std::endl;
-            for(Ame::Word::SENSE::POS& pos : sense.POS_List)
+            output = output +  "\tPOS Elements: " + "\n";
+            for(Ame::Word::SENSE::POS pos : sense.POS_List)
             {
-                std::cout << "\t\tValue: " << pos.value << std::endl;
+                output = output +  "\t\tValue: " + pos.value + "\n";
             }
-            std::cout << "\tGLOSS Elements: " << std::endl;
-            for(Ame::Word::SENSE::GLOSS& gloss : sense.GLOSS_List)
+            output = output +  "\tGLOSS Elements: " + "\n";
+            for(Ame::Word::SENSE::GLOSS gloss : sense.GLOSS_List)
             {
-                std::cout << "\t\tValue: " << gloss.value << std::endl;
+                output = output +  "\t\tValue: " + gloss.value + "\n";
             }
-            std::cout << std::endl;
+            output = output +  "\n";
         }
+
+        return output;
+    }
+    std::ostream& operator<<(std::ostream& os, const Word& w)
+    {
+        std::string content = w.Print();
+        os << content;
+        return os;
     }
 }

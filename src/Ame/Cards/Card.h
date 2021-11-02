@@ -9,6 +9,6 @@ namespace Ame
         public:
             AbstractCard(){}
             virtual std::string RenderTemplate(std::string Template) = 0;
-            virtual void Print() = 0;
+            virtual std::string Print() const = 0;
     };
 }

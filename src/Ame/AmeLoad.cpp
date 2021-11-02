@@ -7,12 +7,12 @@
 
 namespace Ame
 {
-    int Ame::loadArgs(int argc, char **argv)
+    ame_result Ame::loadArgs(int argc, char **argv)
     {
+        ame_result output(true, errorCode::OK);
+
         printOutputMessage(AME_OUTPUT_MESSAGES::I_LD_ARGS);
 
-        int output = 0;
-        
         Core::ArgsParser argParser;
 
         argParser.generateArgument(configInstance.inputFile, "-input", true, true, "", false);
@@ -27,26 +27,28 @@ namespace Ame
         int parseOutput = argParser.Parse(argc, argv);
         if(parseOutput != Core::parseOutput::po_SUCCESS)
         {
+            output.OK = false;
             //TODO: HANDLE ERROR PROPERLY
             switch(parseOutput)
             {
-                case Core::parseOutput::po_ADDITIONAL_PARAMETER_GIVEN: output = ameError::ame_ARGPARSER_ADDITIONAL_PARAMETER_GIVEN;
-                case Core::parseOutput::po_MISSING_INPUT: output = ameError::ame_ARGPARSER_MISSING_INPUT;
-                case Core::parseOutput::po_MISSING_REQUIRED_PARAMETER:  output = ameError::ame_ARGPARSER_MISSING_REQUIRED_PARAMETER;
-                default: output = -1;
+                case Core::configParseOutput::cpo_ADDITIONAL_PARAMETER_GIVEN: output.value = errorCode::conf_ERR_ADDITIONAL_PARAMETER_GIVEN;
+                case Core::configParseOutput::cpo_MISSING_INPUT: output.value = errorCode::conf_MISSING_INPUT;
+                case Core::configParseOutput::cpo_MISSING_REQUIRED_PARAMETER:  output.value = errorCode::conf_ERR_MISSING_REQUIRED_PARAMETER;
+                case Core::configParseOutput::cpo_MISSING_FILE: output.value = errorCode::conf_MISSING_CONFIG_FILE;
+                default: output.value = errorCode::ERR;
             }
         }
 
         return output;
     }
 
-    int Ame::loadConfigurationFromFile(std::string file)
+    ame_result Ame::loadConfigurationFromFile(std::string file)
     {
-        
+
+        ame_result output(true, errorCode::OK, "");
+
         printOutputMessage(AME_OUTPUT_MESSAGES::I_LD_CFG, configInstance.noHumanOutput);
         
-        int output = 0;
-
         Core::ConfigParser configParser;
 
         configParser.generateArgument(configInstance.logFile, "Log", false);
@@ -60,26 +62,27 @@ namespace Ame
         
         if(configOutput != Core::configParseOutput::cpo_SUCCESS)
         {
+            output.OK = false;
             //TODO: HANDLE ERROR PROPERLY
             switch(configOutput)
             {
-                case Core::configParseOutput::cpo_ADDITIONAL_PARAMETER_GIVEN: output = ameError::ame_ARGPARSER_ADDITIONAL_PARAMETER_GIVEN;
-                case Core::configParseOutput::cpo_MISSING_INPUT: output = ameError::ame_ARGPARSER_MISSING_INPUT;
-                case Core::configParseOutput::cpo_MISSING_REQUIRED_PARAMETER:  output = ameError::ame_ARGPARSER_MISSING_REQUIRED_PARAMETER;
-                case Core::configParseOutput::cpo_MISSING_FILE: output = ameError::ame_ARGPARSER_MISSING_CONFIG_FILE;
-                default: output = -1;
+                case Core::configParseOutput::cpo_ADDITIONAL_PARAMETER_GIVEN: output.value = errorCode::conf_ERR_ADDITIONAL_PARAMETER_GIVEN;
+                case Core::configParseOutput::cpo_MISSING_INPUT: output.value = errorCode::conf_MISSING_INPUT;
+                case Core::configParseOutput::cpo_MISSING_REQUIRED_PARAMETER:  output.value = errorCode::conf_ERR_MISSING_REQUIRED_PARAMETER;
+                case Core::configParseOutput::cpo_MISSING_FILE: output.value = errorCode::conf_MISSING_CONFIG_FILE;
+                default: output.value = errorCode::ERR;
             }
         }
 
         return output;
     }
 
-    int Ame::loadConfigurationFromString(std::string config)
+    ame_result Ame::loadConfigurationFromString(std::string config)
     {
         
+        ame_result output(true, errorCode::OK, "");
         printOutputMessage(AME_OUTPUT_MESSAGES::I_LD_CFG, configInstance.noHumanOutput);
         
-        int output = 0;
 
         Core::ConfigParser configParser;
 
@@ -91,23 +94,24 @@ namespace Ame
         
         if(configOutput != Core::configParseOutput::cpo_SUCCESS)
         {
+            output.OK = false;
             //TODO: HANDLE ERROR PROPERLY
             switch(configOutput)
             {
-                case Core::configParseOutput::cpo_ADDITIONAL_PARAMETER_GIVEN: output = ameError::ame_ARGPARSER_ADDITIONAL_PARAMETER_GIVEN;
-                case Core::configParseOutput::cpo_MISSING_INPUT: output = ameError::ame_ARGPARSER_MISSING_INPUT;
-                case Core::configParseOutput::cpo_MISSING_REQUIRED_PARAMETER:  output = ameError::ame_ARGPARSER_MISSING_REQUIRED_PARAMETER;
-                case Core::configParseOutput::cpo_MISSING_FILE: output = ameError::ame_ARGPARSER_MISSING_CONFIG_FILE;
-                default: output = -1;
+                case Core::configParseOutput::cpo_ADDITIONAL_PARAMETER_GIVEN: output.value = errorCode::conf_ERR_ADDITIONAL_PARAMETER_GIVEN;
+                case Core::configParseOutput::cpo_MISSING_INPUT: output.value = errorCode::conf_MISSING_INPUT;
+                case Core::configParseOutput::cpo_MISSING_REQUIRED_PARAMETER:  output.value = errorCode::conf_ERR_MISSING_REQUIRED_PARAMETER;
+                case Core::configParseOutput::cpo_MISSING_FILE: output.value = errorCode::conf_MISSING_CONFIG_FILE;
+                default: output.value = errorCode::ERR;
             }
         }
 
         return output;
     }
 
-    int Ame::preRunChecklist()
+    ame_result Ame::preRunChecklist()
     {
-        int output = 0;
+        ame_result output(true, errorCode::OK);
 
         if(configInstance.inputFile == "") return -1;
         if(configInstance.outputFile == "") return -1;

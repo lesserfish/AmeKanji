@@ -25,7 +25,7 @@ namespace Ame
         lib.debug();
     }
 
-    int Ame::Run()
+    ame_result Ame::Run()
     {
         // Before running Run(), one needs to run Initialize(). This function will generate the remaining parameters of AmeConfig, which, in turn, will
         // be used by the remaining functions. For example: This will load the Library class.
@@ -34,6 +34,6 @@ namespace Ame
         // Then, one will create a copy of the template, replacing every variable of the form @variable with the corresponding value from the class.
         // Perhaps this should be done on the Library class?? Or perhaps the class Kanji and Word should be subclasses of a greater class, which has a virtual function
         // that transforms its content into 
-        return 0;
+        return ame_result();
     }
 }

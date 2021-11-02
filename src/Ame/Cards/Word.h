@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include "Card.h"
@@ -9,8 +10,9 @@ namespace Ame
     class Word : public AbstractCard
     {
         public:
+            friend std::ostream& operator<<(std::ostream& os, const Word& w);
             std::string RenderTemplate(std::string Template);
-            void Print();
+            std::string Print() const;
             Word(){}
             ~Word(){}
         public:

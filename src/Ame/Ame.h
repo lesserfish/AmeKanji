@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AmeConfig.h"
+#include "ErrorCodes.h"
 #include <string>
 
 namespace Ame
@@ -11,20 +12,20 @@ namespace Ame
             Ame(int argc, char **argv);
             Ame();
 
-            int loadArgs(int argc, char **argv);
+            ame_result loadArgs(int argc, char **argv);
 
-            int loadConfigurationFromString(std::string config = "");
-            int loadConfigurationFromFile(std::string file = "");
+            ame_result loadConfigurationFromString(std::string config = "");
+            ame_result loadConfigurationFromFile(std::string file = "");
 
-            int preRunChecklist();
-            int Run();
+            ame_result preRunChecklist();
+            ame_result Run();
 
 
-            int loadTemplateFromFile(std::string file = "");
-            int loadTemplateFromString(std::string cTemplate);
+            ame_result loadTemplateFromFile(std::string file = "");
+            ame_result loadTemplateFromString(std::string cTemplate);
 
-            int loadWordlistFromFile(std::string file = "");
-            int loadWordlistFromString(std::string cWordlist);
+            ame_result loadWordlistFromFile(std::string file = "");
+            ame_result loadWordlistFromString(std::string cWordlist);
 
             void printConfiguration();
 

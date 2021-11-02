@@ -46,14 +46,14 @@ namespace Ame
 
         return output;
     }
-    parse_output JMdict::getWordInformation(Word &output, std::string Kanji, std::vector<std::string> Args){
+    ame_result JMdict::getWordInformation(Word &output, std::string Kanji, std::vector<std::string> Args){
         
-        parse_output o{false, parse_result::ERR_MISSING_VALUE, "Error! Failed to find the provided word."};
+        ame_result o{false, errorCode::parser_ERR_MISSING_VALUE, "Error! Failed to find the provided word."};
         
         if(XMLDoc.empty())
         {
             o.OK = false;
-            o.result = parse_result::ERR_EMPTY_DIC;
+            o.value = errorCode::parser_ERR_EMPTY_DIC;
             o.Message = "Error! The dictionary provided is empty";
             return o;
         }
@@ -62,7 +62,7 @@ namespace Ame
         if(root.empty())
         {
             o.OK = false;
-            o.result = parse_result::ERR_MISSING_VALUE;
+            o.value = errorCode::parser_ERR_MISSING_VALUE;
             o.Message = "Error! The XML Dictionary provided does not have a JMDict node. Are you sure this is the correct file?";
             return o;
         }
@@ -215,7 +215,7 @@ namespace Ame
                 output.SENSE_List = thisSENSE_List;
 
                 o.OK = true;
-                o.result = parse_result::OK;
+                o.value = errorCode::OK;
                 o.Message = "OK!";
 
                 return o;
@@ -223,13 +223,13 @@ namespace Ame
         }
         return o;
     }
-    parse_output JMdict::getWordInformation(Word &output, std::string Kanji, std::string Hiragana, std::vector<std::string> Args){
-        parse_output o{false, parse_result::ERR_MISSING_VALUE, "Error! Failed to find the provided word."};
+    ame_result JMdict::getWordInformation(Word &output, std::string Kanji, std::string Hiragana, std::vector<std::string> Args){
+        ame_result o{false, errorCode::parser_ERR_MISSING_VALUE, "Error! Failed to find the provided word."};
         
         if(XMLDoc.empty())
         {
             o.OK = false;
-            o.result = parse_result::ERR_EMPTY_DIC;
+            o.value = errorCode::parser_ERR_EMPTY_DIC;
             o.Message = "Error! The dictionary provided is empty";
             return o;
         }
@@ -238,7 +238,7 @@ namespace Ame
         if(root.empty())
         {
             o.OK = false;
-            o.result = parse_result::ERR_MISSING_VALUE;
+            o.value = errorCode::parser_ERR_MISSING_VALUE;
             o.Message = "Error! The XML Dictionary provided does not have a JMDict node. Are you sure this is the correct file?";
             return o;
         }
@@ -398,7 +398,7 @@ namespace Ame
                 output.SENSE_List = thisSENSE_List;
 
                 o.OK = true;
-                o.result = parse_result::OK;
+                o.value = errorCode::OK;
                 o.Message = "OK!";
 
                 return o;

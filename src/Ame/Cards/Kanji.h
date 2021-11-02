@@ -10,7 +10,7 @@ namespace Ame
     {
         public:
             std::string RenderTemplate(std::string Template);
-            void Print();
+            std::string Print() const;
         public:
             struct LITERAL
             {

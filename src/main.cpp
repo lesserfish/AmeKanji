@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 {
     Ame::Ame ame;
 
-    int loadOutput = ame.loadArgs(argc, argv);
+    Ame::ame_result loadOutput = ame.loadArgs(argc, argv);
     ame.debug();
     //int configOutput = ame.loadConfigurationFromFile();
     //configOutput = ame.loadConfigurationFromString("Tag=159\n");
@@ -40,7 +40,10 @@ int main(int argc, char **argv)
     std::cout << "Result: " << r << std::endl;
 
     Ame::Word w;
-    Ame::parse_output o = jm.getWordInformation(w, "開ける", "ひらける");
+    Ame::ame_result o = jm.getWordInformation(w, "開ける", "ひらける");
     std::cout << "Result: " << o.Message << std::endl;
-    w.Print();
+    std::cout << w;
+    o = jm.getWordInformation(w, "開ける");
+    std::cout << "Result: " << o.Message << std::endl;
+    std::cout << w;
 }
