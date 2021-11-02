@@ -1,21 +1,3 @@
-1- Add a function which reads a file "template.txt" and formats out variables of the formats
-    @definition
-    @hiragana
-    @kanji
-    @JLPTLVL
-    etc...
-
-2- Create a function which, given a list of words and a list of variables obtained in 1), reads an XML file looking for the corresponding info and stores it into a list.
-
-3- Create a function to download the remaining information out of the internet, if needed! This includes
-    Kanji stroke order
-    Audio files
-
-4- Create a function to pass all that into a text file
-
-
-
-
 Template:
 <?xml version="1.0" encoding="UTF-8">
 <template>
@@ -26,3 +8,47 @@ Template:
         The level difficulty of this card is: @JLPTLVL
     </field>
 </template>
+
+
+class Ame
+{
+
+	ame_result loadConfigurationFromFile( ...
+	ame_result loadConfigurationFromString( std::vector<string>  <- change this. new overload
+	ame_result loadWordlistFromFile(....
+	ame_result loadWordlistFromString( std::vector <stringZ
+	ame_result loadTemplateFromFile(....
+	ame_result loadTemplateFronString( std::vector <string>
+	ame_result loadLibrary()
+	template<class T....> ame_result loadLibrary()
+	ame_result setParser(
+	template<class T... > ame_result setParserManually(std::function<ame_result(T.....
+	ame_result setWeb(....
+	template<class T...> ame_result setWebManually( std::function<ame_result(....
+	ame_result setRegex(...
+	template<class T...> ame_result setRegexManually( ....
+	ame_result createDeck(AnkiDeck &deck, std::vector<std::string>> Args .....
+}
+
+class AnkiDeck
+{
+	std::string Fields;
+	ame_result SaveToFile(...
+	ame_result AsString(....
+
+}
+
+class Library
+{
+	loadConfiguration(....
+	SetParserManually(....
+	setParserAutomatically(....
+	setWebManually(
+	setWebAutomatically(....
+	setRegexAutomatically
+	setRegexManually
+	ame_result PopulateCard(T &card, ....
+	ame_result downloadMedia(T &card, std::string directory
+
+}
+

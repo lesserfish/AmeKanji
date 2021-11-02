@@ -40,10 +40,10 @@ int main(int argc, char **argv)
     std::cout << "Result: " << r.value << std::endl;
 
     Ame::Word w;
-    Ame::ame_result o = jm.getWordInformation(w, "開ける", "ひらける");
+    Ame::ame_result o = jm.getInformation(w, {"開ける", "ひらける"});
     std::cout << "Result: " << o.Message << std::endl;
     std::cout << w;
-    o = jm.getWordInformation(w, "開ける");
+    o = jm.getWordInformation(w, {"開ける"});
     std::cout << "Result: " << o.Message << std::endl;
     std::cout << w;
 }
