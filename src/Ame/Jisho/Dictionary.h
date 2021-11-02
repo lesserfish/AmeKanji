@@ -16,6 +16,7 @@ namespace Ame
     };
     struct parse_output
     {
+        bool OK;
         parse_result result;
         std::string Message;
     };

@@ -47,3 +47,113 @@ namespace Ame
             ParserMode parser;
     };
 }
+
+
+/*
+
+How I think this API should be used:
+
+////
+////
+////
+
+config.Dictionary = "JMDict";
+AmeLibrary<Kanji> library(config);
+
+
+library_result = library.Load();
+if(!library_result.OK)
+    return;
+
+std::vector<Kanji> cardList;
+
+for(auto& request in Requests)
+{
+    Kanji k;
+    read_results r = library.populateCard(k, request);
+    web_results w = library.downloadCardMedia(k, request);
+
+    if(!r.OK || !w.OK)
+        return;
+    
+    cardList.push_back(k);
+}
+
+
+AnkiDeck deck;
+for(Kanji& k : cardList)
+{
+    AnkiCard card;
+    for(Field& f : Template)
+    {
+        std::string field_str = k.RenderTemplate(f);
+        Card.push_back(field_str);
+    }
+    deck.AddCard(card);
+}
+
+
+deck.save("New Anki Deck.txt");
+
+////
+////
+////
+
+
+
+Notice that on the previous thingy, the fact that we were working with objects of the class Kanji was never truly significant. So this leaves a possibility, for us to write:
+
+void Ame::Run()
+{
+    ...
+    ...
+    ...
+    switch(config.Mode)
+    {
+        case "Kanji":
+            config.Dictionary = "JMdict";
+            return Render<Kanji>();
+    }
+}
+
+Template<Class T>
+int Render()
+{
+    AmeLibrary<T> library(config);
+
+    library_result = library.Load();
+    if(!library_result.OK)
+        return;
+
+    std::vector<T> cardList;
+
+    for(auto& request : Requests)
+    {
+        T c;
+        // 
+        read_results r = library.populateCard(*c, request);
+        web_results w = library(*c);
+
+        if(!read_results.OK || !web_results.OK)
+            return;
+        
+        cardList.push_back(c);
+    }
+
+    AnkiDeck deck;
+    for(T& c : cardList)
+    {
+        AnkiCard card;
+        for(Field& f : Template)
+        {
+            std::string field_str = c.RenderTemplate(f);
+            Card.push_back(field_str);
+        }
+        deck.AddCard(card);
+    }
+
+
+    deck.save("New Anki Deck.txt");
+
+}
+*/
