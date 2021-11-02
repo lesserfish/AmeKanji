@@ -7,4 +7,5 @@ namespace Ame
         std::string output = "";
         return output;
     }
+    void Kanji::Print(){}
 }

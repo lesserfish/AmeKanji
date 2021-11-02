@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Dictionary.h"
+#include "../Dictionary.h"
 #include "../../Cards/Kanji.h"
 #include <pugixml.hpp>
 

@@ -10,6 +10,9 @@ namespace Ame
     {
         public:
             std::string RenderTemplate(std::string Template);
+            void Print();
+            Word(){}
+            ~Word(){}
         public:
             struct K_ELE
             {

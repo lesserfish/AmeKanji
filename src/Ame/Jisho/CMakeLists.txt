@@ -1,4 +1,4 @@
-set(SOURCE_FILES Library.cpp)
+set(SOURCE_FILES Library.cpp Dictionary.cpp)
 
 add_subdirectory(Parsers)
 

@@ -9,7 +9,7 @@ namespace Ame
     {
         int output = 0;
 
-        pugi::xml_parse_result result = xml_regexInstruction.load_file(file.c_str());
+        pugi::xml_parse_result result = xml_regexInstruction.load_file(file.c_str(), 116U, pugi::encoding_utf8);
 
         if(result.status != pugi::status_ok)
             output = 1;

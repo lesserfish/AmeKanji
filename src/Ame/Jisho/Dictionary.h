@@ -7,6 +7,19 @@ namespace Ame
 {
     // Template class for every dictionary parser. Every dictionary parser inherits from this class.
     // Currently we have four parsers: NewKanjidict, Kanjidict, JMdict and Edict. 
+    
+    enum class parse_result {
+        OK,
+        ERR,
+        ERR_EMPTY_DIC,
+        ERR_MISSING_VALUE
+    };
+    struct parse_output
+    {
+        parse_result result;
+        std::string Message;
+    };
+    
     class Dictionary
     {
         public:
