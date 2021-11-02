@@ -15,14 +15,12 @@ namespace Ame
 
         Core::ArgsParser argParser;
 
-        argParser.generateArgument(configInstance.inputFile, "-input", true, true, "", false);
-        argParser.generateArgument(configInstance.outputFile, "-output", false, true, "New Anki Deck.txt", true);
-        argParser.generateArgument(configInstance.configurationFile, "-config", false, true, "Config/config.cfg", true);
-        argParser.generateArgument(configInstance.logFile, "-log", false, true, "Log.txt", true);
-        argParser.generateArgument(configInstance.Tag, "-tag", false, true, "", true);
-        argParser.generateArgument(configInstance.ignoreConfigurationFile, "-ignoreConfig", false, false, "true", false);
-        argParser.generateArgument(configInstance.noHumanOutput, "-HumanReadable", false, true, "true", true);
-        argParser.generateArgument(configInstance.ErrorMD5, "-md5", false, true, "", false);
+        argParser.generateArgument(configInstance.inputFile, "-input");
+        argParser.generateArgument(configInstance.outputFile, "-output");
+        argParser.generateArgument(configInstance.configurationFile, "-config");
+        argParser.generateArgument(configInstance.logFile, "-log");
+        argParser.generateArgument(configInstance.Tag, "-tag");
+        argParser.generateArgument(configInstance.ErrorMD5, "-md5");
 
         int parseOutput = argParser.Parse(argc, argv);
         if(parseOutput != Core::parseOutput::po_SUCCESS)
@@ -51,8 +49,8 @@ namespace Ame
         
         Core::ConfigParser configParser;
 
-        configParser.generateArgument(configInstance.logFile, "Log", false);
-        configParser.generateArgument(configInstance.Tag, "Tag", false);
+        configParser.generateArgument(configInstance.logFile, "Log");
+        configParser.generateArgument(configInstance.Tag, "Tag");
 
         
         if(file == "")
@@ -86,8 +84,8 @@ namespace Ame
 
         Core::ConfigParser configParser;
 
-        configParser.generateArgument(configInstance.logFile, "Log", false);
-        configParser.generateArgument(configInstance.Tag, "Tag", false);
+        configParser.generateArgument(configInstance.logFile, "Log");
+        configParser.generateArgument(configInstance.Tag, "Tag");
 
         
         int configOutput = configParser.ParseFromString(config, "=", false);

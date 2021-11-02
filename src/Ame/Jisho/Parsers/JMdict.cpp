@@ -45,6 +45,23 @@ namespace Ame
 
         return output;
     }
+
+    template<class T>
+    ame_result JMdict::getInformation(T &output, std::vector<std::string> Input, std::vector<std::string> Args)
+    {
+        ame_result o{false, statusCode::parser_ERR_WRONG_TYPE, "Error! The parser JMdict only works with the class Word!"};
+        return o;
+    }
+    template<>
+    ame_result JMdict::getInformation(Word &output, std::vector<std::string> Input, std::vector<std::string> Args)
+    {
+        if(Input.size() < 1) 
+            return ame_result{false, statusCode::parser_ERR_MISSING_ARGUMENTS, "Missing arguments! Please provide the kanji of the required word!"};
+        if(Args.size() == 1)
+            return getWordInformation(output, Input[0], Args);
+        else
+            return getWordInformation(output, Input[0], Input[1], Args); 
+    }
     ame_result JMdict::getWordInformation(Word &output, std::string Kanji, std::vector<std::string> Args){
         
         ame_result o{false, statusCode::parser_ERR_MISSING_VALUE, "Error! Failed to find the provided word."};

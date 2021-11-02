@@ -20,16 +20,21 @@ namespace Ame
             ame_result preRunChecklist();
             ame_result Run();
 
-
             ame_result loadTemplateFromFile(std::string file = "");
             ame_result loadTemplateFromString(std::string cTemplate);
 
             ame_result loadWordlistFromFile(std::string file = "");
             ame_result loadWordlistFromString(std::string cWordlist);
 
+            // TODO: Remove this, make AmeConfig public and overload << operator. Also, add method to load config directly from an instance of AmeConfig.
             void printConfiguration();
 
+            // TODO: Remove this.
             void debug();
+
+            /*
+            
+            */
         private:
             AmeConfig configInstance;
     };

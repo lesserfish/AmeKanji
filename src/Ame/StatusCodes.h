@@ -15,6 +15,8 @@ namespace Ame
         parser_ERR,
         parser_ERR_MISSING_VALUE,
         parser_ERR_EMPTY_DIC,
+        parser_ERR_WRONG_TYPE,
+        parser_ERR_MISSING_ARGUMENTS,
         xml_ERR_LOAD,
     };
 

@@ -45,9 +45,55 @@ namespace Ame
             const AmeConfig &configInstance;
             CardMode mode;
             ParserMode parser;
+
     };
 }
+/* Maybe?
+    template<class T> AmeLibrary
+    {
+        public:
+            ...
+            ...
 
+            // Sets parser manually
+            ame_result setParser(std::function<ame_result(......
+            {
+                invokeParser = _invokeParser;
+            }
+            // Sets parser automatically
+            ame_result setParser()
+            {
+                ...
+                ...
+                ...
+            }
+
+            // Sets args manually
+            ame_result setArgs(std::vector<std::string> args)
+            {
+                ...
+                ...
+            }
+
+            // Sets args automatically
+            ame_result setArgs()
+            {
+                ...
+                ...
+            }
+
+            ame_result populateCard(T &card, std::vector<std::string> input) {
+                invokeParser(card, input, Args);
+                ...
+                ...
+            }
+
+        private:
+            std::function<ame_result(T&, std::vector<std::string>, std::vector<std::string>) invokeParser;
+            std::function<ame_result(T&, std::vector<std::string>, std::vector<std::string>) applyRegex;
+
+            std:.vector<std::string> Args;
+    }
 
 /*
 
