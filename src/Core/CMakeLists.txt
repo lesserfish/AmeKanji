@@ -1,3 +1,3 @@
-set(SOURCE_FILES ArgsParser.cpp ConfigParser.cpp)
+file(GLOB SOURCE_FILES "ArgsParser.cpp" "ConfigParser.cpp")
 
-add_library(Core ${SOURCE_FILES})
+add_library(Core SHARED ${SOURCE_FILES})

@@ -1,3 +1,3 @@
-set(SOURCE_FILES Kanji.cpp Word.cpp)
+file(GLOB SOURCE_FILES "Kanji.cpp" "Word.cpp")
 
-add_library(Cards ${SOURCE_FILES})
+add_library(Cards SHARED ${SOURCE_FILES})
