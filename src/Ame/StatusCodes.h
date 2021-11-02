@@ -4,7 +4,7 @@
 
 namespace Ame
 {
-    enum errorCode
+    enum statusCode
     {
         OK,
         ERR,
@@ -15,16 +15,17 @@ namespace Ame
         parser_ERR,
         parser_ERR_MISSING_VALUE,
         parser_ERR_EMPTY_DIC,
+        xml_ERR_LOAD,
     };
 
     struct ame_result
     {
         ame_result(){}
         ame_result(bool ok) : OK(ok){}
-        ame_result(bool ok, errorCode ec) : OK(ok), value(ec){}
-        ame_result(bool ok, errorCode ec, std::string m) : OK(ok), value(ec), Message(m){}
+        ame_result(bool ok, statusCode ec) : OK(ok), value(ec){}
+        ame_result(bool ok, statusCode ec, std::string m) : OK(ok), value(ec), Message(m){}
         bool OK;
-        errorCode value;
+        statusCode value;
         std::string Message;
     };
 }

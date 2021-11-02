@@ -7,15 +7,15 @@ namespace Ame
     {
     }
 
-    int Edict::loadDictionaryFromFile(std::string file)
+    ame_result Edict::loadDictionaryFromFile(std::string file)
     {
-        int output = 0;
+        ame_result output(true, statusCode::OK);
 
         std::ifstream inputfile;
         inputfile.open(file, std::ios::in);
 
         if(!inputfile.is_open())
-            return -1;
+            ame_result(false, statusCode::ERR);
         
         std::string content;
         
@@ -30,10 +30,10 @@ namespace Ame
         return output;
     }
 
-    int Edict::loadDictionaryFromString(std::string content)
+    ame_result Edict::loadDictionaryFromString(std::string content)
     {
         UTF8Doc = content;
-        return 0;
+        return ame_result(true, statusCode::OK);
     }
 
 }

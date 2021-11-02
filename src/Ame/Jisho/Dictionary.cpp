@@ -5,27 +5,27 @@ namespace Ame
 {
     Dictionary::Dictionary(){}
     
-    int Dictionary::loadXMLRegexFromFile(std::string file)
+    ame_result Dictionary::loadXMLRegexFromFile(std::string file, unsigned int options, pugi::xml_encoding enconding)
     {
-        int output = 0;
+        ame_result output(true, statusCode::OK, "");
 
-        pugi::xml_parse_result result = xml_regexInstruction.load_file(file.c_str(), 116U, pugi::encoding_utf8);
+        pugi::xml_parse_result result = xml_regexInstruction.load_file(file.c_str(), options, enconding);
 
         if(result.status != pugi::status_ok)
-            output = 1;
+            output = ame_result(false, statusCode::xml_ERR_LOAD);
 
         return output;
     }
 
-    int Dictionary::loadXMLRegexFromString(std::string content)
+    ame_result Dictionary::loadXMLRegexFromString(std::string content, unsigned int options)
     {
 
-        int output = 0;
+        ame_result output(true, statusCode::OK, "");
 
-        pugi::xml_parse_result result = xml_regexInstruction.load_string(content.c_str());
+        pugi::xml_parse_result result = xml_regexInstruction.load_string(content.c_str(), options);
 
         if(result.status != pugi::status_ok)
-            output = 1;
+            output = ame_result(false, statusCode::xml_ERR_LOAD);
 
         return output;
     }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AmeConfig.h"
-#include "ErrorCodes.h"
+#include "StatusCodes.h"
 #include <string>
 
 namespace Ame

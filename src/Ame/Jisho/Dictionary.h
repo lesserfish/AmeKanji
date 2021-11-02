@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../StatusCodes.h"
 #include <string>
 #include <pugixml.hpp>
 
@@ -29,13 +30,13 @@ namespace Ame
     {
         public:
             Dictionary();
-            virtual int loadDictionaryFromFile(std::string file) = 0;
-            virtual int loadDictionaryFromString(std::string content) = 0;
+            virtual ame_result loadDictionaryFromFile(std::string file) = 0;
+            virtual ame_result loadDictionaryFromString(std::string content) = 0;
 
-            virtual int loadXMLRegexFromFile(std::string file);
-            virtual int loadXMLRegexFromString(std::string content);
+            virtual ame_result loadXMLRegexFromFile(std::string file, unsigned int options = 116U, pugi::xml_encoding enconding = pugi::encoding_utf8);
+            virtual ame_result loadXMLRegexFromString(std::string file, unsigned int options = 116U);
 
-            virtual int generateRegexInstance() = 0;
+            virtual ame_result generateRegexInstance() = 0;
 
         private:
             pugi::xml_document xml_regexInstruction; 

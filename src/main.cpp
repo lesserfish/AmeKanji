@@ -36,8 +36,8 @@ int main(int argc, char **argv)
 
     Ame::JMdict jm;
 
-    int r = jm.loadDictionaryFromFile("/home/vchavauty/Documents/Code/AmeKanji/Repository/vocab/JMdict.xml");
-    std::cout << "Result: " << r << std::endl;
+    Ame::ame_result r = jm.loadDictionaryFromFile("/home/vchavauty/Documents/Code/AmeKanji/Repository/vocab/JMdict.xml");
+    std::cout << "Result: " << r.value << std::endl;
 
     Ame::Word w;
     Ame::ame_result o = jm.getWordInformation(w, "開ける", "ひらける");

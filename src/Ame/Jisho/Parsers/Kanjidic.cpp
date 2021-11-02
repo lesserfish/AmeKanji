@@ -7,15 +7,15 @@ namespace Ame
     {
     }
 
-    int Kanjidict::loadDictionaryFromFile(std::string file)
+    ame_result Kanjidict::loadDictionaryFromFile(std::string file)
     {
-        int output = 0;
+        ame_result output(true, statusCode::OK);
 
         std::ifstream inputfile;
         inputfile.open(file, std::ios::in);
 
         if(!inputfile.is_open())
-            return -1;
+            return ame_result(false, statusCode::ERR);
         
         std::string content;
         
@@ -30,11 +30,11 @@ namespace Ame
         return output;
     }
 
-    int Kanjidict::loadDictionaryFromString(std::string content)
+    ame_result Kanjidict::loadDictionaryFromString(std::string content)
     {
         UTF8Doc = content;
 
-        return 0;
+        return ame_result(true, statusCode::OK);
     }
 
 }

@@ -22,38 +22,37 @@ namespace Ame
     {
     }
     
-    int JMdict::loadDictionaryFromFile(std::string file)
+    ame_result JMdict::loadDictionaryFromFile(std::string file)
     {
-        int output = 0;
+        ame_result output = ame_result(true, statusCode::OK);
 
         pugi::xml_parse_result result = XMLDoc.load_file(file.c_str());
 
         if(result.status != pugi::status_ok)
-            output = 1;
+            output = ame_result(false, statusCode::ERR);
 
         return output;
     }
 
-    int JMdict::loadDictionaryFromString(std::string content)
+    ame_result JMdict::loadDictionaryFromString(std::string content)
     {
-
-        int output = 0;
+        ame_result output(true, statusCode::OK);
 
         pugi::xml_parse_result result = XMLDoc.load_string(content.c_str());
 
         if(result.status != pugi::status_ok)
-            output = 1;
+            output = ame_result(false, statusCode::ERR);
 
         return output;
     }
     ame_result JMdict::getWordInformation(Word &output, std::string Kanji, std::vector<std::string> Args){
         
-        ame_result o{false, errorCode::parser_ERR_MISSING_VALUE, "Error! Failed to find the provided word."};
+        ame_result o{false, statusCode::parser_ERR_MISSING_VALUE, "Error! Failed to find the provided word."};
         
         if(XMLDoc.empty())
         {
             o.OK = false;
-            o.value = errorCode::parser_ERR_EMPTY_DIC;
+            o.value = statusCode::parser_ERR_EMPTY_DIC;
             o.Message = "Error! The dictionary provided is empty";
             return o;
         }
@@ -62,7 +61,7 @@ namespace Ame
         if(root.empty())
         {
             o.OK = false;
-            o.value = errorCode::parser_ERR_MISSING_VALUE;
+            o.value = statusCode::parser_ERR_MISSING_VALUE;
             o.Message = "Error! The XML Dictionary provided does not have a JMDict node. Are you sure this is the correct file?";
             return o;
         }
@@ -215,7 +214,7 @@ namespace Ame
                 output.SENSE_List = thisSENSE_List;
 
                 o.OK = true;
-                o.value = errorCode::OK;
+                o.value = statusCode::OK;
                 o.Message = "OK!";
 
                 return o;
@@ -224,12 +223,12 @@ namespace Ame
         return o;
     }
     ame_result JMdict::getWordInformation(Word &output, std::string Kanji, std::string Hiragana, std::vector<std::string> Args){
-        ame_result o{false, errorCode::parser_ERR_MISSING_VALUE, "Error! Failed to find the provided word."};
+        ame_result o{false, statusCode::parser_ERR_MISSING_VALUE, "Error! Failed to find the provided word."};
         
         if(XMLDoc.empty())
         {
             o.OK = false;
-            o.value = errorCode::parser_ERR_EMPTY_DIC;
+            o.value = statusCode::parser_ERR_EMPTY_DIC;
             o.Message = "Error! The dictionary provided is empty";
             return o;
         }
@@ -238,7 +237,7 @@ namespace Ame
         if(root.empty())
         {
             o.OK = false;
-            o.value = errorCode::parser_ERR_MISSING_VALUE;
+            o.value = statusCode::parser_ERR_MISSING_VALUE;
             o.Message = "Error! The XML Dictionary provided does not have a JMDict node. Are you sure this is the correct file?";
             return o;
         }
@@ -398,7 +397,7 @@ namespace Ame
                 output.SENSE_List = thisSENSE_List;
 
                 o.OK = true;
-                o.value = errorCode::OK;
+                o.value = statusCode::OK;
                 o.Message = "OK!";
 
                 return o;
@@ -413,8 +412,8 @@ namespace Ame
         
         return o;
     }
-    int JMdict::generateRegexInstance(){
-        return 0;
+    ame_result JMdict::generateRegexInstance(){
+        return ame_result(true, statusCode::OK);
     }
 
 }

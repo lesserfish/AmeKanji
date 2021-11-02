@@ -2,7 +2,7 @@
 
 #include "../Dictionary.h"
 #include "../../Cards/Word.h"
-#include "../../ErrorCodes.h"
+#include "../../StatusCodes.h"
 #include <pugixml.hpp>
 
 namespace Ame
@@ -18,10 +18,10 @@ namespace Ame
             
             regex_output applyRegex(Word &input);
             
-            int loadDictionaryFromFile(std::string file);
-            int loadDictionaryFromString(std::string content);
+            ame_result loadDictionaryFromFile(std::string file);
+            ame_result loadDictionaryFromString(std::string content);
 
-            int generateRegexInstance();
+            ame_result generateRegexInstance();
         private:
             pugi::xml_document XMLDoc;
             const char * root_name;
