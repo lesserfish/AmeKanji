@@ -15,8 +15,8 @@ namespace Ame
             JMdict();
             static ame_result getInformation(Word &output, std::string dictionary, std::vector<std::string> Input = {}, std::vector<std::string> Args = {});
             static ame_result getInformationXML(Word &output, pugi::xml_document &XMLDoc, std::vector<std::string> Input = {}, std::vector<std::string> Args = {}); 
-            static ame_result applyRegex(Word &input);
-            static ame_result generateRegexInstance();
+            static ame_result applyRegex(Word &input, std::string Regex, std::vector<std::string> Args = {});
+            static ame_result applyRegexXML(Word &input, pugi::xml_document &Regex, std::vector<std::string> Args = {});
         private:
             static ame_result getWordInformation(Word &output, std::string Kanji, pugi::xml_document& XMLDoc, std::vector<std::string> Args = {});
             static ame_result getWordInformation(Word &output, std::string Kanji, std::string Katakana, pugi::xml_document& XMLDoc, std::vector<std::string> Args = {});
@@ -37,5 +37,19 @@ namespace Ame
             static const char * keb_name;
             static const char * ke_pri_name;
             static const char * ke_inf_name;
+            static const char * regex_root_name;
+            static const char * regex_entry_name;
+            static const char * regex_ent_seq_name;
+            static const char * regex_r_ele_name;
+            static const char * regex_reb_name;
+            static const char * regex_re_pri_name;
+            static const char * regex_re_inf_name;
+            static const char * regex_sense_name;
+            static const char * regex_pos_name;
+            static const char * regex_gloss_name;
+            static const char * regex_k_ele_name;
+            static const char * regex_keb_name;
+            static const char * regex_ke_pri_name;
+            static const char * regex_ke_inf_name;
     };
 }

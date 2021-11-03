@@ -1,7 +1,9 @@
 Read Regex from XML file
 Read Template from XML file
 
-Finish Library, so that we can apply Regex 
+Create Regex Parser for JMDict.
+
+Create Deck class and give it the attribute to be able to save itself to a file.
 
 Create main loop of AmeKanji
 ||

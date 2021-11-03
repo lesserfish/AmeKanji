@@ -59,6 +59,13 @@ namespace Ame
                 
                 return ame_result();
             }
+            inline ame_result loadParserManually(std::function < ame_result(K&, pugi::xml_document&, std::vector<std::string>, std::vector<std::string>) > func)            {
+                parserMode = ParserMode::Unkown;
+                parserInput = ParserInput::XML;
+                parserXMLFunction = func;
+                
+                return ame_result();
+            }
             inline ame_result loadParserAutomatically(){
                 guessParser();
                 parserInput = ParserInput::ANY;
@@ -80,9 +87,19 @@ namespace Ame
                 regexParserFunction = func;
                 return ame_result(true, statusCode::OK);
             }
+            inline ame_result loadRegexParserManually(std::function < ame_result(K&, pugi::xml_document &, std::vector<std::string>) > func)
+            {
+                regexMode = RegexMode::Unknown;
+                regexParserXMLFunction = func;
+                return ame_result(true, statusCode::OK);
+            }
             inline ame_result loadRegexParserAutomatically()
             {
                 guessRegex();
+                switch(regexMode)
+                {
+
+                }
                 return ame_result(false, statusCode::ERR, "Failed to find the Regex Parser given the configuration! You can always set DisableParser to 'true' in the configuration and skip it!");
             }
 
@@ -120,6 +137,10 @@ namespace Ame
             inline ame_result InvokeRegex(K& output, std::string Regex, std::vector<std::string> args)
             {
                 return regexParserFunction(output, Regex, args);
+            }
+            inline ame_result InvokeRegex(K& output, pugi::xml_document &Regex, std::vector<std::string>Args)
+            {
+                return regexParserXMLFunction(output, Regex, Args);
             }
 
 

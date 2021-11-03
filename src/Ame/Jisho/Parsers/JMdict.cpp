@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <pugixml.hpp>
+#include "../Regex/RegexParser.h"
 
 namespace Ame
 {
@@ -20,6 +21,20 @@ namespace Ame
     const char* JMdict::keb_name = "keb";
     const char* JMdict::ke_pri_name = "ke_pri";
     const char* JMdict::ke_inf_name = "ke_inf";
+    const char* JMdict::regex_root_name = "JMdict";
+    const char* JMdict::regex_entry_name = "entry";
+    const char* JMdict::regex_ent_seq_name = "ent_seq";
+    const char* JMdict::regex_r_ele_name = "r_ele";
+    const char* JMdict::regex_reb_name = "reb";
+    const char* JMdict::regex_re_pri_name = "re_pri";
+    const char* JMdict::regex_re_inf_name = "re_inf";
+    const char* JMdict::regex_sense_name = "sense";
+    const char* JMdict::regex_pos_name = "pos";
+    const char* JMdict::regex_gloss_name = "gloss";
+    const char* JMdict::regex_k_ele_name = "k_ele";
+    const char* JMdict::regex_keb_name = "keb";
+    const char* JMdict::regex_ke_pri_name = "ke_pri";
+    const char* JMdict::regex_ke_inf_name = "ke_inf";
                             
     JMdict::JMdict() : Dictionary(){}
 
@@ -424,15 +439,127 @@ namespace Ame
         }
         return o;
     }
-
-    ame_result JMdict::applyRegex(Word &input)
+    ame_result JMdict::applyRegex(Word &input, std::string Regex, std::vector<std::string> Args)
     {
-        ame_result o{true, statusCode::OK};
-        
-        return o;
-    }
-    ame_result JMdict::generateRegexInstance(){
-        return ame_result(true, statusCode::OK);
-    }
+        pugi::xml_document XMLDoc;
+        ame_result r;
+        if(Args.size() < 1)
+        {
+            r = loadDictionaryFromFile(XMLDoc, Regex);
+        }
+        else
+        {
+            if(Args[0] == "file")
+                r = loadDictionaryFromFile(XMLDoc, Regex);
+            else if(Args[0] == "string")
+                r = loadDictionaryFromString(XMLDoc, Regex);
+            else
+                r = loadDictionaryFromFile(XMLDoc, Regex);
+        }
+        if(!r.OK)
+                return r;
 
+        return applyRegexXML(input, XMLDoc, Args);
+    }
+    ame_result JMdict::applyRegexXML(Word &input, pugi::xml_document &Regex, std::vector<std::string> Args)
+    {
+        // Ent Seq
+
+        pugi::xml_node root = Regex.child(regex_root_name);
+        pugi::xml_node ent_seq_node = root.child("ent_seq");
+        pugi::xml_node r_ele_node = root.child(regex_r_ele_name);
+        pugi::xml_node reb_node = root.child(regex_reb_name);
+        pugi::xml_node re_pri_node = root.child(regex_re_pri_name);
+        pugi::xml_node re_inf_node = root.child(regex_re_inf_name);
+        pugi::xml_node sense_node = root.child(regex_sense_name);
+        pugi::xml_node pos_node = root.child(regex_pos_name);
+        pugi::xml_node gloss_node = root.child(regex_gloss_name);
+        pugi::xml_node k_ele_node = root.child(regex_k_ele_name);
+        pugi::xml_node keb_node = root.child(regex_keb_name);
+        pugi::xml_node ke_pri_node = root.child(regex_ke_pri_name);
+        pugi::xml_node ke_inf_node = root.child(regex_ke_inf_name);
+
+
+        std::string Original;
+        Core::RegexOrder rOrder;
+        std::vector<std::string> Result;
+
+        // ent_seq:
+
+        Original = input.ent_seq.value;
+        rOrder = getRegexOrderFromNode(ent_seq_node);
+        Result = Core::ParseRegex(rOrder, Original); 
+        input.ent_seq.value =  FON(Result);
+
+
+        for(Word::K_ELE& kele : input.K_ELE_List)
+        {
+            for(Word::K_ELE::KEB &keb : kele.KEB_List)
+            {
+                Original = keb.value;
+                rOrder = getRegexOrderFromNode(keb_node);
+                Result = Core::ParseRegex(rOrder, Original);
+                keb.value = FON(Result);
+            }
+            for(Word::K_ELE::KE_INF &kinf : kele.KE_INF_List)
+            {
+                Original = kinf.value;
+                rOrder = getRegexOrderFromNode(ke_inf_node);
+                Result = Core::ParseRegex(rOrder, Original);
+                kinf.value = FON(Result);
+            }
+            for(Word::K_ELE::KE_PRI &kpri : kele.KE_PRI_List)
+            {
+                Original = kpri.value;
+                rOrder = getRegexOrderFromNode(ke_pri_node);
+                Result = Core::ParseRegex(rOrder, Original);
+                kpri.value = FON(Result);
+            }
+        }
+
+        for(Word::R_ELE& rele : input.R_ELE_List)
+        {
+            for(Word::R_ELE::REB &reb : rele.REB_List)
+            {
+                Original = reb.value;
+                rOrder = getRegexOrderFromNode(reb_node);
+                Result = Core::ParseRegex(rOrder, Original);
+                reb.value = FON(Result);
+            }
+            for(Word::R_ELE::RE_INF &rinf : rele.RE_INF_List)
+            {
+                Original = rinf.value;
+                rOrder = getRegexOrderFromNode(re_inf_node);
+                Result = Core::ParseRegex(rOrder, Original);
+                rinf.value = FON(Result);
+            }
+            for(Word::R_ELE::RE_PRI &rpri : rele.RE_PRI_List)
+            {
+                Original = rpri.value;
+                rOrder = getRegexOrderFromNode(re_pri_node);
+                Result = Core::ParseRegex(rOrder, Original);
+                rpri.value = FON(Result);
+            }
+        }
+
+        for(Word::SENSE& sense : input.SENSE_List)
+        {
+            for(Word::SENSE::POS& pos : sense.POS_List)
+            {
+                Original = pos.value;
+                rOrder = getRegexOrderFromNode(pos_node);
+                Result = Core::ParseRegex(rOrder, Original);
+                pos.value = FON(Result);
+            }
+            for(Word::SENSE::GLOSS& gloss : sense.GLOSS_List)
+            {
+                Original = gloss.value;
+                rOrder = getRegexOrderFromNode(gloss_node);
+                Result = Core::ParseRegex(rOrder, Original);
+                gloss.value = FON(Result);
+            }
+        }
+
+        return ame_result();
+    }
 }

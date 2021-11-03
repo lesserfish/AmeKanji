@@ -3,10 +3,12 @@
 #include <string>
 #include <vector>
 #include <regex>
+#include <iostream>
+#include <pugixml.hpp>
 
 namespace Core 
 {
-    enum regOP{MATCH, SEARCH, REPLACE};
+    enum regOP{NONE, MATCH, SEARCH, REPLACE};
     struct RegexInstruction
     {
         RegexInstruction(regOP _op, std::string _regexInstruction, std::string _Argument) : op(_op), regexInstruction(_regexInstruction), Argument(_Argument){};
@@ -25,6 +27,7 @@ namespace Core
 
     static const inline std::vector<std::string> ParseRegex(RegexOrder order, std::string Target)
     {
+    //    std::cout << "Parsing Regex!\n\nOrder: " << "\n\nTarget: " << Target << std::endl;
         std::vector<std::string> output;
         output.push_back(Target);
 
@@ -56,6 +59,7 @@ namespace Core
                         }
                         break;
                     case regOP::REPLACE:
+//                        std::cout << "We have to replace shit!\n";
                         T = currentTarget;
                         currentRegex = std::regex(instruction.regexInstruction);
                         result = std::regex_replace(T, currentRegex, instruction.Argument);
@@ -74,5 +78,4 @@ namespace Core
 
         return output;
     }
-
 }

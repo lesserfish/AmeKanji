@@ -2,6 +2,7 @@
 
 #include "../StatusCodes.h"
 #include <string>
+#include <vector>
 #include <pugixml.hpp>
 
 namespace Ame
@@ -33,6 +34,11 @@ namespace Ame
                     output = ame_result(false, statusCode::ERR);
 
                 return output;
+            }
+            static std::string FON(std::vector<std::string> L)
+            {
+                std::string o = (L.size() > 0) ? L.at(0) : "";
+                return o;
             }
 
     };
