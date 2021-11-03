@@ -34,11 +34,15 @@ int main(int argc, char **argv)
 
     // Loading everything through the configuration
 
-    
+
     Ame::AmeLibrary<Ame::Word> newnewlib(config);
     config.ConfigurationFile = "/home/vchavauty/Documents/Code/AmeKanji/Repository/vocab/JMdict.xml";
     newnewlib.setDictionaryAutomatically();
     newnewlib.loadParserAutomatically();
     newnewlib.invokeParser(word, {"乳首"}, true);
     std::cout << word;
+
+
+    Ame::AmeLibrary<Ame::Word> libra(config);
+    libra.invokeParser(word, {"a"}, false);
 }

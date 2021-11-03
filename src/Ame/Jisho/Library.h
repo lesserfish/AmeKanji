@@ -27,7 +27,12 @@ namespace Ame
     class AmeLibrary
     {
         public:
-            AmeLibrary(AmeConfig &config) : configInstance(config) {}
+            AmeLibrary(AmeConfig &config) : configInstance(config), 
+                                                parserFunction([=](K& k, std::string str, std::vector<std::string> s1, std::vector<std::string>s2){
+                                                    return ame_result(false, statusCode::ERR, "No parser given!");}),
+                                                regexParserFunction([=](K& k, std::string, std::vector<std::string>){
+                                                    return ame_result(false, statusCode::ERR, "No regex parser given!");})
+            {}
 
             inline ame_result Load(){
                 return ame_result();
@@ -35,7 +40,7 @@ namespace Ame
             inline ame_result loadParserManually(std::function < ame_result(K&, std::string, std::vector<std::string>, std::vector<std::string>) > func)            {
                 parserFunction = func;
                 guessCardMode();
-                return ame_result{};
+                return ame_result();
             }
             inline ame_result loadParserAutomatically(){
                 guessCardMode();
@@ -46,6 +51,12 @@ namespace Ame
                     parserFunction = JMdict::getInformation;
                 }
 
+                return ame_result();
+            }
+            inline ame_result loadRegexParserManually(std::function < ame_result(K&, std::string, std::vector<std::string>) > func)
+            {
+                regexParserFunction = func;
+                guessCardMode();
                 return ame_result();
             }
             inline ame_result invokeParser(K& output, std::string dict, std::vector<std::string> input = {}, std::vector<std::string> args = {}, bool includeDictionaryArgs = false){
@@ -93,6 +104,8 @@ namespace Ame
             }
             
             inline void addArgs(std::vector<std::string>& currentArgs){}
+            
+            
             private:
             
             CardMode cardMode;
@@ -100,7 +113,7 @@ namespace Ame
             
             AmeConfig& configInstance;
             std::function<ame_result(K&, std::string, std::vector<std::string>, std::vector<std::string>)> parserFunction;
-
+            std::function<ame_result(K&, std::string, std::vector<std::string>)> regexParserFunction;
             struct DictionaryOptions {
                 std::string Mode;
                 std::string Arg;
