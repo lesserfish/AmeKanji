@@ -28,6 +28,9 @@ class Ame
 	ame_result setRegex(...
 	template<class T...> ame_result setRegexManually( ....
 	ame_result createDeck(AnkiDeck &deck, std::vector<std::string>> Args .....
+	
+	ame_result SetUpCallback(std::function<void(callbackIno)> f)
+	std::function<void(callbackInfo> callbackFunction; // Call this function on every step of the main loop.
 }
 
 class AnkiDeck
