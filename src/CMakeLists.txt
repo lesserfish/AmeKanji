@@ -5,4 +5,4 @@ add_subdirectory(Ame)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} Core Ame)
+target_link_libraries(${PROJECT_NAME} Core Ame Jisho)

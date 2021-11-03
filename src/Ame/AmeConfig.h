@@ -11,24 +11,25 @@ namespace Ame
     typedef std::tuple<std::string, std::string> scfg;
     struct AmeConfig
     {
-        std::string inputFile;
-        std::string outputFile;
-        std::string configurationFile;
-        std::string logFile;
-        std::string jishoFile;
+        std::string InputFile;
+        std::string OutputFile;
+        std::string ConfigurationFile;
+        std::string LogFile;
+        std::string DictionaryFile;
+        std::string DictionaryContent;
+        std::string PreferDictionaryContentOverFile;
         std::string Tag;
         std::string Mode;
-        std::string forceOnlineMode;
-        std::string ErrorAudioFile;
-        std::string asdasd;
-        std::string ErrorMD5;
-        std::string noHumanOutput;
-        std::string ignoreConfigurationFile;
+        std::string ForceOnlineMode;
+        std::string AudioFileError;
+        std::string KanjiStrokeDirectory;
+        std::string KanjiStrokeNaming;
+        std::string Parser;
 
-        inline friend std::ostream& operator<<(std::ostream&os, AmeConfig &config)
+        /*inline friend std::ostream& operator<<(std::ostream&os, AmeConfig &config)
         {
             std::vector<scfg> output = {
-            scfg("Input file: " , config.inputFile),
+            /*scfg("Input file: " , config.inputFile),
             scfg("Output file: ", config.outputFile),
             scfg("Configuration file: ", config.configurationFile),
             scfg("Log file: ", config.logFile),
@@ -50,7 +51,7 @@ namespace Ame
             }
             return os << outputString;
             
-        }
+        }*/
     };
 
 }

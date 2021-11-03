@@ -13,32 +13,33 @@ namespace Ame
     {
         public:
             JMdict();
-            template<class T>
-            ame_result getInformation(T &output, std::vector<std::string> Input = {}, std::vector<std::string> Args = {});
+            static ame_result getInformation(Word &output, std::string dictionary, std::vector<std::string> Input = {}, std::vector<std::string> Args = {});
             
-            ame_result applyRegex(Word &input);
+            static ame_result applyRegex(Word &input);
             
-            ame_result loadDictionaryFromFile(std::string file);
-            ame_result loadDictionaryFromString(std::string content);
+            //static ame_result loadDictionaryFromFile(pugi::xml_document &, std::string file);
+            //static ame_result loadDictionaryFromString(pugi::xml_document &, std::string content);
 
-            ame_result generateRegexInstance();
+            static ame_result generateRegexInstance();
         private:
-            ame_result getWordInformation(Word &output, std::string Kanji, std::vector<std::string> Args = {});
-            ame_result getWordInformation(Word &output, std::string Kanji, std::string Katakana, std::vector<std::string> Args = {});pugi::xml_document XMLDoc;
+            static ame_result getWordInformation(Word &output, std::string Kanji, pugi::xml_document& XMLDoc, std::vector<std::string> Args = {});
+            static ame_result getWordInformation(Word &output, std::string Kanji, std::string Katakana, pugi::xml_document& XMLDoc, std::vector<std::string> Args = {});
             
-            const char * root_name;
-            const char * entry_name;
-            const char * ent_seq_name;
-            const char * r_ele_name;
-            const char * reb_name;
-            const char * re_pri_name;
-            const char * re_inf_name;
-            const char * sense_name;
-            const char * pos_name;
-            const char * gloss_name;
-            const char * k_ele_name;
-            const char * keb_name;
-            const char * ke_pri_name;
-            const char * ke_inf_name;
+            static const char * t;
+
+            static const char * root_name;
+            static const char * entry_name;
+            static const char * ent_seq_name;
+            static const char * r_ele_name;
+            static const char * reb_name;
+            static const char * re_pri_name;
+            static const char * re_inf_name;
+            static const char * sense_name;
+            static const char * pos_name;
+            static const char * gloss_name;
+            static const char * k_ele_name;
+            static const char * keb_name;
+            static const char * ke_pri_name;
+            static const char * ke_inf_name;
     };
 }

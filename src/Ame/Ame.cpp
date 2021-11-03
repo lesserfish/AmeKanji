@@ -15,7 +15,6 @@ namespace Ame
     }
     void Ame::printConfiguration()
     {
-        std::cout << configInstance;
     }
 
     ame_result Ame::Run()

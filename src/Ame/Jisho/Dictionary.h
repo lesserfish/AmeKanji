@@ -6,22 +6,34 @@
 
 namespace Ame
 {
-    // Template class for every dictionary parser. Every dictionary parser inherits from this class.
-    // Currently we have four parsers: NewKanjidict, Kanjidict, JMdict and Edict. 
-    
     class Dictionary
     {
         public:
-            Dictionary();
-            virtual ame_result loadDictionaryFromFile(std::string file) = 0;
-            virtual ame_result loadDictionaryFromString(std::string content) = 0;
+            virtual ~Dictionary(){};
+            
+            static ame_result loadDictionaryFromFile(pugi::xml_document& XMLDoc, std::string file)
+            {
+                ame_result output = ame_result(true, statusCode::OK);
 
-            virtual ame_result loadXMLRegexFromFile(std::string file, unsigned int options = 116U, pugi::xml_encoding enconding = pugi::encoding_utf8);
-            virtual ame_result loadXMLRegexFromString(std::string file, unsigned int options = 116U);
+                pugi::xml_parse_result result = XMLDoc.load_file(file.c_str());
 
-            virtual ame_result generateRegexInstance() = 0;
+                if(result.status != pugi::status_ok)
+                    output = ame_result(false, statusCode::ERR);
 
-        private:
-            pugi::xml_document xml_regexInstruction; 
+                return output;
+            }
+
+            static ame_result loadDictionaryFromString(pugi::xml_document& XMLDoc, std::string content)
+            {
+                ame_result output(true, statusCode::OK);
+
+                pugi::xml_parse_result result = XMLDoc.load_string(content.c_str());
+
+                if(result.status != pugi::status_ok)
+                    output = ame_result(false, statusCode::ERR);
+
+                return output;
+            }
+
     };
 }

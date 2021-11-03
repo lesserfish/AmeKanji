@@ -1,68 +1,60 @@
 #include "JMdict.h"
 
 #include <iostream>
+#include <pugixml.hpp>
 
 namespace Ame
 {
-    JMdict::JMdict() : root_name("JMdict"),
-                        entry_name("entry"),
-                        ent_seq_name("ent_seq"),
-                        r_ele_name("r_ele"),
-                        reb_name("reb"),
-                        re_pri_name("re_pri"),
-                        re_inf_name("re_inf"),
-                        sense_name("sense"),
-                        pos_name("pos"),
-                        gloss_name("gloss"),
-                        k_ele_name("k_ele"),
-                        keb_name("keb"),
-                        ke_pri_name("ke_pri"),
-                        ke_inf_name("ke_inf"),
-                        Dictionary()
+
+    const char* JMdict::root_name = "JMdict";
+    const char* JMdict::entry_name = "entry";
+    const char* JMdict::ent_seq_name = "ent_seq";
+    const char* JMdict::r_ele_name = "r_ele";
+    const char* JMdict::reb_name = "reb";
+    const char* JMdict::re_pri_name = "re_pri";
+    const char* JMdict::re_inf_name = "re_inf";
+    const char* JMdict::sense_name = "sense";
+    const char* JMdict::pos_name = "pos";
+    const char* JMdict::gloss_name = "gloss";
+    const char* JMdict::k_ele_name = "k_ele";
+    const char* JMdict::keb_name = "keb";
+    const char* JMdict::ke_pri_name = "ke_pri";
+    const char* JMdict::ke_inf_name = "ke_inf";
+                            
+    JMdict::JMdict() : Dictionary(){}
+
+
+    ame_result JMdict::getInformation(Word &output, std::string dictionary, std::vector<std::string> Input, std::vector<std::string> Args)
     {
-    }
-    
-    ame_result JMdict::loadDictionaryFromFile(std::string file)
-    {
-        ame_result output = ame_result(true, statusCode::OK);
+        pugi::xml_document XMLDoc;
 
-        pugi::xml_parse_result result = XMLDoc.load_file(file.c_str());
+        ame_result dict_load;
+        if(Args.size() < 1)
+        {
+            dict_load = loadDictionaryFromFile(XMLDoc, dictionary);
+        }
+        else
+        {
+            if(Args[0] == "file")
+                dict_load = loadDictionaryFromFile(XMLDoc, dictionary);
+            else if(Args[0] == "string")
+                dict_load = loadDictionaryFromString(XMLDoc, dictionary);
+            else
+                dict_load = ame_result(false, statusCode::parser_ERR_MISSING_ARGUMENTS, "It is necessary to specify whether the dictionary is being loaded with 'file' or with 'string' on the first parameter of Args");
+        }
 
-        if(result.status != pugi::status_ok)
-            output = ame_result(false, statusCode::ERR);
+        if(!dict_load.OK)
+            return dict_load;
 
-        return output;
-    }
-
-    ame_result JMdict::loadDictionaryFromString(std::string content)
-    {
-        ame_result output(true, statusCode::OK);
-
-        pugi::xml_parse_result result = XMLDoc.load_string(content.c_str());
-
-        if(result.status != pugi::status_ok)
-            output = ame_result(false, statusCode::ERR);
-
-        return output;
-    }
-
-    template<class T>
-    ame_result JMdict::getInformation(T &output, std::vector<std::string> Input, std::vector<std::string> Args)
-    {
-        ame_result o{false, statusCode::parser_ERR_WRONG_TYPE, "Error! The parser JMdict only works with the class Word!"};
-        return o;
-    }
-    template<>
-    ame_result JMdict::getInformation(Word &output, std::vector<std::string> Input, std::vector<std::string> Args)
-    {
         if(Input.size() < 1) 
             return ame_result{false, statusCode::parser_ERR_MISSING_ARGUMENTS, "Missing arguments! Please provide the kanji of the required word!"};
         else if(Input.size() == 1)
-            return getWordInformation(output, Input[0], Args);
+            return getWordInformation(output, Input[0], XMLDoc, Args);
         else
-            return getWordInformation(output, Input[0], Input[1], Args); 
+            return getWordInformation(output, Input[0], Input[1], XMLDoc, Args); 
     }
-    ame_result JMdict::getWordInformation(Word &output, std::string Kanji, std::vector<std::string> Args){
+
+    ame_result JMdict::getWordInformation(Word &output, std::string Kanji, pugi::xml_document& XMLDoc, std::vector<std::string> Args){
         
         ame_result o{false, statusCode::parser_ERR_MISSING_VALUE, "Error! Failed to find the provided word."};
         
@@ -239,7 +231,7 @@ namespace Ame
         }
         return o;
     }
-    ame_result JMdict::getWordInformation(Word &output, std::string Kanji, std::string Hiragana, std::vector<std::string> Args){
+    ame_result JMdict::getWordInformation(Word &output, std::string Kanji, std::string Hiragana, pugi::xml_document& XMLDoc, std::vector<std::string> Args){
         ame_result o{false, statusCode::parser_ERR_MISSING_VALUE, "Error! Failed to find the provided word."};
         
         if(XMLDoc.empty())

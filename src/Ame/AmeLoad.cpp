@@ -11,17 +11,15 @@ namespace Ame
     {
         ame_result output(true, statusCode::OK);
 
-        printOutputMessage(AME_OUTPUT_MESSAGES::I_LD_ARGS);
-
         Core::ArgsParser argParser;
 
-        argParser.generateArgument(configInstance.inputFile, "-input");
+        /*argParser.generateArgument(configInstance.inputFile, "-input");
         argParser.generateArgument(configInstance.outputFile, "-output");
         argParser.generateArgument(configInstance.configurationFile, "-config");
         argParser.generateArgument(configInstance.logFile, "-log");
         argParser.generateArgument(configInstance.Tag, "-tag");
         argParser.generateArgument(configInstance.ErrorMD5, "-md5");
-
+*/
         int parseOutput = argParser.Parse(argc, argv);
         if(parseOutput != Core::parseOutput::po_SUCCESS)
         {
@@ -45,16 +43,14 @@ namespace Ame
 
         ame_result output(true, statusCode::OK, "");
 
-        printOutputMessage(AME_OUTPUT_MESSAGES::I_LD_CFG, configInstance.noHumanOutput);
-        
         Core::ConfigParser configParser;
-
+/*
         configParser.generateArgument(configInstance.logFile, "Log");
         configParser.generateArgument(configInstance.Tag, "Tag");
-
+*/
         
         if(file == "")
-            file = configInstance.configurationFile;
+            file = configInstance.ConfigurationFile;
 
         int configOutput = configParser.Parse(file, "=", false);
         
@@ -79,14 +75,12 @@ namespace Ame
     {
         
         ame_result output(true, statusCode::OK, "");
-        printOutputMessage(AME_OUTPUT_MESSAGES::I_LD_CFG, configInstance.noHumanOutput);
-        
 
         Core::ConfigParser configParser;
 
-        configParser.generateArgument(configInstance.logFile, "Log");
+/*        configParser.generateArgument(configInstance.logFile, "Log");
         configParser.generateArgument(configInstance.Tag, "Tag");
-
+*/
         
         int configOutput = configParser.ParseFromString(config, "=", false);
         
@@ -111,9 +105,9 @@ namespace Ame
     {
         ame_result output(true, statusCode::OK);
 
-        if(configInstance.inputFile == "") return -1;
+/*        if(configInstance.inputFile == "") return -1;
         if(configInstance.outputFile == "") return -1;
-        
+  */      
         return output;
     }
 }

@@ -13,6 +13,8 @@ namespace Ame
             Edict();
             Word getWordInformation(std::string Kanji, std::string Mode = "");
             Word getWordiinformation(std::string Kanji, std::string Katakana, std::string Mode = "");
+
+            static Word getInformation(Word &output, std::vector<std::string> Input, std::string Dictionary, std::vector<std::string> Args);
             
             virtual ame_result loadDictionaryFromFile(std::string file) = 0;
             virtual ame_result loadDictionaryFromString(std::string content) = 0;

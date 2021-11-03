@@ -3,46 +3,47 @@
 #include "Core/Regex/Regex.h"
 #include "Ame/Cards/Word.h"
 #include "Ame/Jisho/Parsers/JMdict.h"
+#include "Ame/Jisho/Library.h"
 #include <assert.h>
 #include <iostream>
 #include <vector>
 #include <string>
-
+#include <functional>
 
 int main(int argc, char **argv)
 {
-    Ame::Ame ame;
+    Ame::AmeConfig config;
+    Ame::AmeLibrary<Ame::Word> lib(config);
 
-    Ame::ame_result loadOutput = ame.loadArgs(argc, argv);
-    //int configOutput = ame.loadConfigurationFromFile();
-    //configOutput = ame.loadConfigurationFromString("Tag=159\n");
-    //ame.printConfiguration();
-
-    //Ame::VocabDict vocabDict;
-    //vocabDict.loadXMLFromString("<template><field>This is the first Field: We have @kanji: &#28450;&#23383;</field><field>This is the second Field: We have @katakana: &lt;&#12363;&#12435;&#12376;&gt;</field><field>This is the third Field. There is nothing to see here!</field></template>");
-    //vocabDict.loadUTF8FromFile("test.txt");
-
-    /*Core::RegexInstruction ri(Core::regOP::MATCH, "\\d", "");
-    ri = Core::RegexInstruction(Core::regOP::REPLACE, "\\d", "VICTOR");
-    Core::RegexOrder ro(ri);
-
-    std::vector<std::string> re = Core::ParseRegex(ro, "abc1def2hij3v");
-
-    for(std::string& s : re)
-    {
-        std::cout << s << std::endl;
-    }*/
-
-    Ame::JMdict jm;
-
-    Ame::ame_result r = jm.loadDictionaryFromFile("/home/vchavauty/Documents/Code/AmeKanji/Repository/vocab/JMdict.xml");
-    std::cout << "Result: " << r.value << std::endl;
-
-    Ame::Word w;
-    Ame::ame_result o = jm.getInformation(w, {"開ける", "ひらける"});
+    lib.loadParserManually(Ame::JMdict::getInformation);
+    Ame::Word word;
+    Ame::ame_result o = lib.invokeParser(word, "/home/vchavauty/Documents/Code/AmeKanji/Repository/vocab/JMdict.xml", {"開ける"});
     std::cout << "Result: " << o.Message << std::endl;
-    std::cout << w;
-    o = jm.getInformation(w, {"開ける"});
+    std::cout << word;
+    o = lib.invokeParser(word, "/home/vchavauty/Documents/Code/AmeKanji/Repository/vocab/JMdict.xml", {"開ける", "ひらける"});
     std::cout << "Result: " << o.Message << std::endl;
-    std::cout << w;
+    std::cout << word; 
+   
+    
+    Ame::CardMode cm = lib.getCardMode();
+    std::string cm_str = (cm == Ame::CardMode::Kanji) ? "Kanji" :
+                    ((cm == Ame::CardMode::Word) ? "Word" : "Unknown");
+
+    std::cout << "Card Mode: " << cm_str << std::endl;
+
+    config.Parser = "JMdict";
+    Ame::AmeLibrary<Ame::Word> newlib(config);
+    
+    o = newlib.loadParserAutomatically();
+    newlib.setDictionaryManually("/home/vchavauty/Documents/Code/AmeKanji/Repository/vocab/JMdict.xml", "file");
+    newlib.invokeParser(word, {"試みる"}, {}, true);
+    std::cout << word;
+
+
+    Ame::AmeLibrary<Ame::Word> newnewlib(config);
+    config.ConfigurationFile = "/home/vchavauty/Documents/Code/AmeKanji/Repository/vocab/JMdict.xml";
+    newnewlib.setDictionaryAutomatically();
+    newnewlib.loadParserAutomatically();
+    newnewlib.invokeParser(word, {"乳首"}, true);
+    std::cout << word;
 }
