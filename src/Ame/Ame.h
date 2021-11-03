@@ -4,6 +4,7 @@
 #include "StatusCodes.h"
 #include <string>
 #include <functional>
+#include <pugixml.hpp>
 
 namespace Ame
 {
@@ -18,6 +19,8 @@ namespace Ame
 
             ame_result loadConfigurationFromString(std::string config = "");
             ame_result loadConfigurationFromFile(std::string file = "");
+            ame_result loadConfigurationFromXML(std::string XMLContent, std::string rootNode = "ame");
+            ame_result loadConfigurationFromXML(pugi::xml_document &XMLDoc, std::string rootNode = "ame");
 
             ame_result preRunChecklist();
             ame_result Run();

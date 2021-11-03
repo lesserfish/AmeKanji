@@ -109,6 +109,67 @@ namespace Ame
         return output;
     }
 
+    ame_result Ame::loadConfigurationFromXML(pugi::xml_document &XMLDoc, std::string rootNode)
+    {
+        ame_result output(true, statusCode::OK, "");
+
+        Core::ConfigParser configParser;
+
+        configParser.generateArgument(configInstance.SplitStdout, "splitstdout");
+/*        configParser.generateArgument(configInstance.logFile, "Log");
+        configParser.generateArgument(configInstance.Tag, "Tag");
+*/
+        
+        int configOutput = configParser.ParseFromXML(rootNode, XMLDoc);
+        
+        if(configOutput != Core::configParseOutput::cpo_SUCCESS)
+        {
+            output.OK = false;
+            //TODO: HANDLE ERROR PROPERLY
+            switch(configOutput)
+            {
+                case Core::configParseOutput::cpo_ADDITIONAL_PARAMETER_GIVEN: output.value = statusCode::conf_ERR_ADDITIONAL_PARAMETER_GIVEN;
+                case Core::configParseOutput::cpo_MISSING_INPUT: output.value = statusCode::conf_MISSING_INPUT;
+                case Core::configParseOutput::cpo_MISSING_REQUIRED_PARAMETER:  output.value = statusCode::conf_ERR_MISSING_REQUIRED_PARAMETER;
+                case Core::configParseOutput::cpo_MISSING_FILE: output.value = statusCode::conf_MISSING_CONFIG_FILE;
+                default: output.value = statusCode::ERR;
+            }
+        }
+
+        return output;
+    }
+
+    ame_result Ame::loadConfigurationFromXML(std::string Content, std::string rootnode)
+    {
+        
+        ame_result output(true, statusCode::OK, "");
+
+        Core::ConfigParser configParser;
+
+        configParser.generateArgument(configInstance.SplitStdout, "splitstdout");
+/*        configParser.generateArgument(configInstance.logFile, "Log");
+        configParser.generateArgument(configInstance.Tag, "Tag");
+*/
+        
+        int configOutput = configParser.ParseFromXML(rootnode, Content);
+        
+        if(configOutput != Core::configParseOutput::cpo_SUCCESS)
+        {
+            output.OK = false;
+            //TODO: HANDLE ERROR PROPERLY
+            switch(configOutput)
+            {
+                case Core::configParseOutput::cpo_ADDITIONAL_PARAMETER_GIVEN: output.value = statusCode::conf_ERR_ADDITIONAL_PARAMETER_GIVEN;
+                case Core::configParseOutput::cpo_MISSING_INPUT: output.value = statusCode::conf_MISSING_INPUT;
+                case Core::configParseOutput::cpo_MISSING_REQUIRED_PARAMETER:  output.value = statusCode::conf_ERR_MISSING_REQUIRED_PARAMETER;
+                case Core::configParseOutput::cpo_MISSING_FILE: output.value = statusCode::conf_MISSING_CONFIG_FILE;
+                default: output.value = statusCode::ERR;
+            }
+        }
+
+        return output;
+    }
+
     ame_result Ame::preRunChecklist()
     {
         ame_result output(true, statusCode::OK);

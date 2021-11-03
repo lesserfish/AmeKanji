@@ -61,8 +61,12 @@ int main(int argc, char **argv)
     std::cout << word;
 
 
+    pugi::xml_document docxml;
+    docxml.load_file("/home/vchavauty/Downloads/file.xml");
+    docxml.load_file("/home/vchavauty/Documents/Code/AmeKanji/tmp/file.xml");
     Ame::Ame ame;
-    ame.loadConfigurationFromString("splitstdout=true");
+    //ame.loadConfigurationFromString("splitstdout=true");
+    ame.loadConfigurationFromXML(docxml, "ame");
     ame.load_stdout_callback(p);
     ame.AmePrint("Hello there Arthur! Nice to meet you!");
 }

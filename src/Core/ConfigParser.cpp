@@ -131,4 +131,79 @@ namespace Core
         
         return configParseOutput::cpo_SUCCESS;
     }
+    int ConfigParser::ParseFromXML(std::string rootNode, pugi::xml_document& XMLDoc, bool assertArgument)
+    {
+        std::vector<Argument *> missingParameters = argList;
+
+        pugi::xml_node root = XMLDoc.child(rootNode.c_str());
+        for(pugi::xml_node arg = root.first_child(); arg; arg = arg.next_sibling())
+        {
+            std::string argname = arg.name();
+            std::string argval = arg.text().as_string();
+
+            bool argFound = false;
+            
+            for(int i = 0; i < missingParameters.size(); i++)
+            {
+                Argument *arg = missingParameters.at(i);
+                if(argname == arg->name)
+                {
+                    arg->output = argval;
+                    missingParameters.erase(missingParameters.begin() + i);
+                    argFound = true;
+                    break;
+                }
+            }
+
+            if(!argFound & assertArgument)
+                return configParseOutput::cpo_ADDITIONAL_PARAMETER_GIVEN;
+        }
+        
+        for (int i = 0; i < missingParameters.size(); i++)
+        {
+            Argument *arg = missingParameters.at(i);
+            if (arg->required == true)
+                return configParseOutput::cpo_MISSING_REQUIRED_PARAMETER;
+        }
+        
+        return configParseOutput::cpo_SUCCESS;
+    }
+    int ConfigParser::ParseFromXML(std::string rootNode, std::string XMLContent, bool assertArgument)
+    {
+        std::vector<Argument *> missingParameters = argList;
+
+
+        pugi::xml_document XMLDoc;
+        XMLDoc.load_string(XMLContent.c_str());
+        pugi::xml_node root = XMLDoc.child(rootNode.c_str());
+        for(pugi::xml_node arg = root.first_child(); arg; arg = arg.next_sibling())
+        {
+            std::string argname = arg.name();
+            std::string argval = arg.text().as_string();
+            bool argFound = false;
+            
+            for(int i = 0; i < missingParameters.size(); i++)
+            {
+                Argument *arg = missingParameters.at(i);
+                if(argname == arg->name)
+                {
+                    arg->output = argval;
+                    missingParameters.erase(missingParameters.begin() + i);
+                    argFound = true;
+                    break;
+                }
+            }
+
+            if(!argFound & assertArgument)
+                return configParseOutput::cpo_ADDITIONAL_PARAMETER_GIVEN;
+        }
+        
+        for (int i = 0; i < missingParameters.size(); i++)
+        {
+            Argument *arg = missingParameters.at(i);
+            if (arg->required == true)
+                return configParseOutput::cpo_MISSING_REQUIRED_PARAMETER;
+        }
+    }
+        
 }

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <pugixml.hpp>
 
 namespace Core{
 
@@ -21,6 +22,8 @@ namespace Core{
             void generateArgument(std::string &output, std::string name, bool required = false);
             int Parse(std::string file, std::string = "=", bool assertArgument = false);
             int ParseFromString(std::string Content, std::string separator = "=", bool assertArgument = false);
+            int ParseFromXML(std::string rootNode, pugi::xml_document &XMLDoc, bool assertArgument = false);
+            int ParseFromXML(std::string rootNode, std::string XMLContent, bool assertArgument = false);
         private:
 
         struct Argument
