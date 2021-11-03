@@ -54,6 +54,16 @@ namespace Ame
             return getWordInformation(output, Input[0], Input[1], XMLDoc, Args); 
     }
 
+    ame_result JMdict::getInformationXML(Word &output, pugi::xml_document& XMLDoc, std::vector<std::string> Input, std::vector<std::string> Args)
+    {
+        if(Input.size() < 1) 
+            return ame_result{false, statusCode::parser_ERR_MISSING_ARGUMENTS, "Missing arguments! Please provide the kanji of the required word!"};
+        else if(Input.size() == 1)
+            return getWordInformation(output, Input[0], XMLDoc, Args);
+        else
+            return getWordInformation(output, Input[0], Input[1], XMLDoc, Args); 
+    }
+
     ame_result JMdict::getWordInformation(Word &output, std::string Kanji, pugi::xml_document& XMLDoc, std::vector<std::string> Args){
         
         ame_result o{false, statusCode::parser_ERR_MISSING_VALUE, "Error! Failed to find the provided word."};

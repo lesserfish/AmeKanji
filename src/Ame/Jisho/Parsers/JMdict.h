@@ -14,12 +14,8 @@ namespace Ame
         public:
             JMdict();
             static ame_result getInformation(Word &output, std::string dictionary, std::vector<std::string> Input = {}, std::vector<std::string> Args = {});
-            
+            static ame_result getInformationXML(Word &output, pugi::xml_document &XMLDoc, std::vector<std::string> Input = {}, std::vector<std::string> Args = {}); 
             static ame_result applyRegex(Word &input);
-            
-            //static ame_result loadDictionaryFromFile(pugi::xml_document &, std::string file);
-            //static ame_result loadDictionaryFromString(pugi::xml_document &, std::string content);
-
             static ame_result generateRegexInstance();
         private:
             static ame_result getWordInformation(Word &output, std::string Kanji, pugi::xml_document& XMLDoc, std::vector<std::string> Args = {});

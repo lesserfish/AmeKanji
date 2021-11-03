@@ -21,6 +21,8 @@ namespace Ame
 {
     enum class CardMode {Unkown, Kanji, Word};
     enum class ParserMode {Unkown, JMdict, Edict, Kanjidic, NewKanjidic};
+    enum class RegexMode {Unknown, JMDict, Edict, Kanjidic, NewKanjidic};
+    enum class ParserInput {ANY, XML, TXT};
    
    
     template<class K> 
@@ -29,39 +31,67 @@ namespace Ame
         public:
             AmeLibrary(AmeConfig &config) : configInstance(config), 
                                                 parserFunction([=](K& k, std::string str, std::vector<std::string> s1, std::vector<std::string>s2){
-                                                    return ame_result(false, statusCode::ERR, "No parser given!");}),
+                                                    return ame_result(false, statusCode::ERR, "No parser given!");
+                                                }),
+                                                parserXMLFunction([=](K& k, pugi::xml_document&, std::vector<std::string> s1, std::vector<std::string>s2){
+                                                    return ame_result(false, statusCode::ERR, "No parser given!");
+                                                }),
                                                 regexParserFunction([=](K& k, std::string, std::vector<std::string>){
-                                                    return ame_result(false, statusCode::ERR, "No regex parser given!");})
-            {}
+                                                    return ame_result(false, statusCode::ERR, "No regex parser given!");
+                                                }),
+                                                regexParserXMLFunction([=](K& k, pugi::xml_document&, std::vector<std::string>){
+                                                    return ame_result(false, statusCode::ERR, "No regex parser given!");
+                                                })
+            {
+                guessCardMode();
+            }
+
+
+            // Loading functions
 
             inline ame_result Load(){
                 return ame_result();
             }
             inline ame_result loadParserManually(std::function < ame_result(K&, std::string, std::vector<std::string>, std::vector<std::string>) > func)            {
+                parserMode = ParserMode::Unkown;
+                parserInput = ParserInput::TXT;
                 parserFunction = func;
-                guessCardMode();
+                
                 return ame_result();
             }
             inline ame_result loadParserAutomatically(){
-                guessCardMode();
                 guessParser();
+                parserInput = ParserInput::ANY;
 
-                if(parserMode == ParserMode::JMdict)
+                switch(parserMode)
                 {
-                    parserFunction = JMdict::getInformation;
+                    case ParserMode::JMdict: 
+                        parserFunction = JMdict::getInformation;
+                        parserXMLFunction = JMdict::getInformationXML; 
+                        return ame_result(true, statusCode::OK);
+                    default: break; 
                 }
 
-                return ame_result();
+                return ame_result(false, statusCode::ERR, "Failed to find the Parser given the configuration!");
             }
             inline ame_result loadRegexParserManually(std::function < ame_result(K&, std::string, std::vector<std::string>) > func)
             {
+                regexMode = RegexMode::Unknown;
                 regexParserFunction = func;
-                guessCardMode();
-                return ame_result();
+                return ame_result(true, statusCode::OK);
             }
+            inline ame_result loadRegexParserAutomatically()
+            {
+                guessRegex();
+                return ame_result(false, statusCode::ERR, "Failed to find the Regex Parser given the configuration! You can always set DisableParser to 'true' in the configuration and skip it!");
+            }
+
+            // Invoking functions
+
             inline ame_result invokeParser(K& output, std::string dict, std::vector<std::string> input = {}, std::vector<std::string> args = {}, bool includeDictionaryArgs = false){
+                addArgs(args);
                 if(includeDictionaryArgs){
-                    guessDictionary();
+                    setDictionaryAutomatically();
                     args.push_back(dictionaryOptions.Mode);
                 }
                 return parserFunction(output, dict, input, args);
@@ -70,17 +100,31 @@ namespace Ame
                 return invokeParser(output, input, {}, includeDictionaryArgs);
             }
             inline ame_result invokeParser(K& output, std::vector<std::string> input = {}, std::vector<std::string> args = {}, bool includeDictionaryArgs = false){
-
                 addArgs(args);
-                guessDictionary();
+                setDictionaryAutomatically();
 
-                std::cout << args.size() << std::endl;
                 if(includeDictionaryArgs){
                     args.push_back(dictionaryOptions.Mode);
                 }
 
                 return parserFunction(output, dictionaryOptions.Arg, input, args);
             }
+            inline ame_result invokeParser(K& output, pugi::xml_document &dict, std::vector<std::string> input = {}, std::vector<std::string> args = {}, bool includeDictionaryArgs = false){
+                addArgs(args);
+                if(includeDictionaryArgs){
+                    setDictionaryAutomatically();
+                    args.push_back(dictionaryOptions.Mode);
+                }
+                return parserXMLFunction(output, dict, input, args);
+            }
+            inline ame_result InvokeRegex(K& output, std::string Regex, std::vector<std::string> args)
+            {
+                return regexParserFunction(output, Regex, args);
+            }
+
+
+            // Configuration Function
+
             inline void setDictionaryManually(std::string Arg, std::string Mode = "")
             {
                 dictionaryOptions.Arg = Arg;
@@ -99,33 +143,50 @@ namespace Ame
                     dictionaryOptions.Mode = "file";
                 }
             }
-            inline CardMode getCardMode(){
-                return cardMode;
-            }
-            
             inline void addArgs(std::vector<std::string>& currentArgs){}
             
             
+            // Retrieval Functions
+            
+            inline CardMode getCardMode(){
+                return cardMode;
+            }
+            inline std::string getDictionaryArgument(){
+               return dictionaryOptions.Arg;
+            } 
+            inline std::string getDictionaryMode(){
+               return dictionaryOptions.Mode;
+            }
+            inline ParserMode getParserMode(){
+                return parserMode;
+            }
+            inline RegexMode getRegexMode(){
+                return regexMode;
+            }
             private:
             
+            // Members
+
             CardMode cardMode;
             ParserMode parserMode;
-            
+            ParserInput parserInput;
+            RegexMode regexMode;
+
             AmeConfig& configInstance;
+            std::function<ame_result(K&, pugi::xml_document &, std::vector<std::string>, std::vector<std::string>)> parserXMLFunction;
             std::function<ame_result(K&, std::string, std::vector<std::string>, std::vector<std::string>)> parserFunction;
+            std::function<ame_result(K&, pugi::xml_document &, std::vector<std::string>)> regexParserXMLFunction;
             std::function<ame_result(K&, std::string, std::vector<std::string>)> regexParserFunction;
+            
             struct DictionaryOptions {
                 std::string Mode;
                 std::string Arg;
             };
-
             DictionaryOptions dictionaryOptions;
             
-            inline void guessDictionary(){
 
-            }
-   
-            void guessCardMode();
+            // Private functions
+
             inline void guessParser()
             {
                 std::string cParserValue = configInstance.Parser;
@@ -146,6 +207,11 @@ namespace Ame
                 else
                     parserMode = ParserMode::Unkown;
             }
+            inline void guessRegex()
+            {
+
+            }
+            void guessCardMode();
 
             
 

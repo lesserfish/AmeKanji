@@ -25,6 +25,7 @@ namespace Ame
         std::string KanjiStrokeDirectory;
         std::string KanjiStrokeNaming;
         std::string Parser;
+        std::string SplitStdout;
 
         /*inline friend std::ostream& operator<<(std::ostream&os, AmeConfig &config)
         {

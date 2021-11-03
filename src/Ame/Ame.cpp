@@ -4,7 +4,7 @@
 
 namespace Ame
 {
-    Ame::Ame() : configInstance()
+    Ame::Ame() : configInstance(), stdout_callback([=](std::string input){ return; })
     {
         std::cout << "Ame Initialized!\n";
     }

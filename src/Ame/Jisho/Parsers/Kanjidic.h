@@ -11,7 +11,6 @@ namespace Ame
         public:
             Kanjidict();
             Kanji getKanjiInformation(std::string Kanji, std::string Mode = "");
-            
             ame_result loadDictionaryFromFile(std::string file);
             ame_result loadDictionaryFromString(std::string content);
 

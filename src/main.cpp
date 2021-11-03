@@ -10,6 +10,11 @@
 #include <string>
 #include <functional>
 
+
+void p(std::string C)
+{
+    std::cout << "ASDASDSAD> " <<C;
+}
 int main(int argc, char **argv)
 {
     Ame::AmeConfig config;
@@ -42,7 +47,22 @@ int main(int argc, char **argv)
     newnewlib.invokeParser(word, {"乳首"}, true);
     std::cout << word;
 
+    // Sending something without a parser does not break everything. It simply fails.
 
     Ame::AmeLibrary<Ame::Word> libra(config);
-    libra.invokeParser(word, {"a"}, false);
+    o = libra.invokeParser(word, {"a"}, false);
+    std::cout << o.Message << std::endl;
+
+    // You can also send your own XML file so the parser does not need to load it again every time.
+
+    pugi::xml_document doc;
+    doc.load_file("/home/vchavauty/Documents/Code/AmeKanji/Repository/vocab/JMdict.xml");
+    newnewlib.invokeParser(word, doc, {"心"});
+    std::cout << word;
+
+
+    Ame::Ame ame;
+    ame.loadConfigurationFromString("splitstdout=true");
+    ame.load_stdout_callback(p);
+    ame.AmePrint("Hello there Arthur! Nice to meet you!");
 }

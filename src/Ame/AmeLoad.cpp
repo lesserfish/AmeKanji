@@ -7,11 +7,18 @@
 
 namespace Ame
 {
+
+    ame_result Ame::load_stdout_callback(std::function<void(std::string)> Func)
+    {
+        stdout_callback = Func;
+        return ame_result();
+    }
     ame_result Ame::loadArgs(int argc, char **argv)
     {
         ame_result output(true, statusCode::OK);
 
         Core::ArgsParser argParser;
+
 
         /*argParser.generateArgument(configInstance.inputFile, "-input");
         argParser.generateArgument(configInstance.outputFile, "-output");
@@ -78,6 +85,7 @@ namespace Ame
 
         Core::ConfigParser configParser;
 
+        configParser.generateArgument(configInstance.SplitStdout, "splitstdout");
 /*        configParser.generateArgument(configInstance.logFile, "Log");
         configParser.generateArgument(configInstance.Tag, "Tag");
 */

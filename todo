@@ -1,3 +1,24 @@
+Read Regex from XML file
+Read Template from XML file
+
+Finish Library, so that we can apply Regex 
+
+Create main loop of AmeKanji
+||
+||
+|_=> With this we should have a working software, and be able to produce decks.
+
+Then, create the AmeWeb library, so that we can download files
+
+Conclude the remaining Dictionary Parsers
+
+Then finish it off by creating assistant functions, so that using the API feels cleaner.
+
+This will end development of AmeKanji
+
+Then you can start with the JS Api.
+
+
 Template:
 <?xml version="1.0" encoding="UTF-8">
 <template>

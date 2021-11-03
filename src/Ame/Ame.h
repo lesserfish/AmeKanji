@@ -3,6 +3,7 @@
 #include "AmeConfig.h"
 #include "StatusCodes.h"
 #include <string>
+#include <functional>
 
 namespace Ame
 {
@@ -13,6 +14,7 @@ namespace Ame
             Ame();
 
             ame_result loadArgs(int argc, char **argv);
+            ame_result load_stdout_callback(std::function<void(std::string)> Func);
 
             ame_result loadConfigurationFromString(std::string config = "");
             ame_result loadConfigurationFromFile(std::string file = "");
@@ -26,6 +28,7 @@ namespace Ame
             ame_result loadWordlistFromFile(std::string file = "");
             ame_result loadWordlistFromString(std::string cWordlist);
 
+            void AmePrint(std::string content);
             // TODO: Remove this, make AmeConfig public and overload << operator. Also, add method to load config directly from an instance of AmeConfig.
             void printConfiguration();
 
@@ -37,5 +40,6 @@ namespace Ame
             */
         private:
             AmeConfig configInstance;
+            std::function<void(std::string)> stdout_callback;
     };
 }
