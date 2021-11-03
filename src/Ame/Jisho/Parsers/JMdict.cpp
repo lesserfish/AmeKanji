@@ -423,9 +423,9 @@ namespace Ame
         return o;
     }
 
-    regex_output JMdict::applyRegex(Word &input)
+    ame_result JMdict::applyRegex(Word &input)
     {
-        regex_output o{"Error!"};
+        ame_result o{true, statusCode::OK};
         
         return o;
     }

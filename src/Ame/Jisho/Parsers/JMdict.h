@@ -16,7 +16,7 @@ namespace Ame
             template<class T>
             ame_result getInformation(T &output, std::vector<std::string> Input = {}, std::vector<std::string> Args = {});
             
-            regex_output applyRegex(Word &input);
+            ame_result applyRegex(Word &input);
             
             ame_result loadDictionaryFromFile(std::string file);
             ame_result loadDictionaryFromString(std::string content);

@@ -17,13 +17,6 @@ namespace Ame
     {
         std::cout << configInstance;
     }
-    void Ame::debug()
-    {
-        AmeLibrary lib(configInstance);
-        lib.debug();
-        configInstance.inputFile = "Changed!";
-        lib.debug();
-    }
 
     ame_result Ame::Run()
     {

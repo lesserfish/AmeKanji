@@ -14,7 +14,6 @@ int main(int argc, char **argv)
     Ame::Ame ame;
 
     Ame::ame_result loadOutput = ame.loadArgs(argc, argv);
-    ame.debug();
     //int configOutput = ame.loadConfigurationFromFile();
     //configOutput = ame.loadConfigurationFromString("Tag=159\n");
     //ame.printConfiguration();
