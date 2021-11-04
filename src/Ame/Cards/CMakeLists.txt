@@ -1,3 +1,7 @@
 file(GLOB SOURCE_FILES "Kanji.cpp" "Word.cpp")
 
+add_subdirectory(Template)
+
 add_library(Cards SHARED ${SOURCE_FILES})
+
+target_link_libraries(Cards Templates)
