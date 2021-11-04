@@ -2,7 +2,7 @@
 #include <string>
 #include "../src/Ame/Cards/Template/TemplateRenderer.h"
 
-TEST(TemplateRendererTest, RenderTest)
+TEST(TemplateRenderer, RenderTest)
 {
     Ame::MapTable mapTable;
     mapTable.Add("pascual", "victor");
@@ -16,8 +16,6 @@ TEST(TemplateRendererTest, RenderTest)
     std::string t3 = Ame::TemplateRenderer::Render("$(OneLastTest), i swear!", mapTable);
     std::string t4 = Ame::TemplateRenderer::Render("My name is $($(ONE)$(TWO))!", mapTable);
     std::string t5 = Ame::TemplateRenderer::Render("$(pascual)", mapTable);
-
-;
 
 
     EXPECT_STREQ(t1.c_str(), "Mi nombre es victor y soy hermoso!");

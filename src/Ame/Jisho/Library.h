@@ -98,7 +98,11 @@ namespace Ame
                 guessRegex();
                 switch(regexMode)
                 {
-
+                    case RegexMode::JMDict: 
+                        regexParserFunction = JMdict::applyRegex;
+                        regexParserXMLFunction = JMdict::applyRegexXML; 
+                        return ame_result(true, statusCode::OK);
+                    default: break; 
                 }
                 return ame_result(false, statusCode::ERR, "Failed to find the Regex Parser given the configuration! You can always set DisableParser to 'true' in the configuration and skip it!");
             }
@@ -231,6 +235,23 @@ namespace Ame
             inline void guessRegex()
             {
 
+                std::string cParserValue = configInstance.Parser;
+                std::transform(cParserValue.begin(), cParserValue.end(), cParserValue.begin(), ::tolower);
+                
+                if(cParserValue == "jmdict")
+                    regexMode = RegexMode::JMDict;
+                else if(cParserValue == "edict")
+                    regexMode = RegexMode::Edict;
+                else if(cParserValue == "hispadic")
+                    regexMode = RegexMode::Edict;
+                else if(cParserValue == "hispamix")
+                    regexMode = RegexMode::Edict;
+                else if(cParserValue == "kanjidic")
+                    regexMode = RegexMode::Kanjidic;
+                else if(cParserValue == "kanjidic2")
+                    regexMode = RegexMode::NewKanjidic;
+                else
+                    regexMode = RegexMode::Unknown;
             }
             void guessCardMode();
 
