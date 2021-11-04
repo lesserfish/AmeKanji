@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install requirements
-      run: sudo apt-get update && sudo apt-get install libpugixml-dev libcurl4-gnutls-dev
+      run: sudo apt-get update && sudo apt-get install libpugixml-dev libcurl4-gnutls-dev libboost-all-dev
     - name: Create Build directory
       run: mkdir ${{github.workspace}}/build
       
