@@ -1,3 +1,39 @@
+1 - Create a Template Class, alongside a static function to instantiate from a file / string XML file
+2 - Create a method to load the input (Words or kanjis, and arguments) from an XML file or XML string and load them into a class AmeInput (or some other dumb name)
+3 - Create a Deck class, with a method to add a (Rendered) card into, given a template. That is: Input ( Card , Template ) -> RenderedCard -- (append to)--> Deck.
+    The method to render a Card given a template should occurr in the card itself. 
+    (?¿ Add the possibility to pass a SystemWide Map Table to the card, so that it can also render global level variables)
+4 - Create the Web class, which should behave similarly to how the Parsers and the Regex are used. 
+    In specific, we should pass a reference to a static function Web::GetMedia(Kard& kard, Args) to the Library class, so that it loads up.
+    So far there should be two subclasses: One for Audio and one for KanjiStrokes. One should be able to create child subclasses of these in order to append 
+    media methods upon each other. For example, construct a subclass VerbConjugation : public Audio, whose static method VerbConjugation::GetMedia invokes Audio::GetMedia.
+    This way, you end up with both Audio and Verb Conjugations on the same card.
+5 - Create the main loop of AmeKanji. The main loop should behave as:
+    - LoadConfiguration
+    - LoadFiles() // (Since this is the main loop, we are mostly loading the files before hand, sp we can send references to pugi::xml_document, or whatever any other class needs)
+    - SetUp()     //  Creates instances of the required classes, and pass the referemces created in the previous step.
+    - PreflightCheck // Checks if there is anything missing. Optional.
+    - Execute()     // Executes the main loop. This loop iterates over every input in the class. For every entry, it invokes the parsers (dictionary parser, web parser, regex parser)
+                    // depending on the configuration. 
+                    // Multithreaded? (NO. The WebParser DOES need the card. It needs the hiragana / kanji in order to download the audio files. Perhaps multithreading should 
+                    // apply to rendering several cards at the same time. (read up on thread pool: https://stackoverflow.com/questions/15752659/thread-pooling-in-c11)
+    - RenderTemplates() // Render the given template for each card, and add the result to an AnkiDeck.
+    - SaveDeckFile()    // Save the New Deck to a file (unless told otherwise). You can also add an options so that AmeKanji invokes a given given std::funcion<void(std::string>)
+                        // with the DeckFile as a txt string.
+6 - Implement the Edict Parser, Kanjidic parser, and NewKanjidic parser.
+7 - Implement the Regex Parser for the Edict parser, Kanjidic parser and NewKanjidic parser.
+7.5 (?) - Implement more UNIT testing. This should help clear up how exactly the API is going to be used.
+8 - This should be it. Now begin implementing the AmeJS API so that you can use it later on. This shouldn't take more than a week.        
+
+
+
+
+
+
+
+
+//
+// old
 Read Regex from XML file
 Read Template from XML file
 

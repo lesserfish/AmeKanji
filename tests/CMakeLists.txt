@@ -9,7 +9,7 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-set(SOURCE_FILES test_main.cpp)
+set(SOURCE_FILES test_main.cpp test_second.cpp)
 add_executable(TEST ${SOURCE_FILES})
 
 target_link_libraries(TEST gtest_main Ame Core)
