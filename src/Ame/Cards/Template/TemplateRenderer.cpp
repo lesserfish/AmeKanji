@@ -82,7 +82,7 @@ namespace Ame
             {
                 std::string::iterator checkpoint = std::next(marker);
                 marker--;
-                while(marker > Template.begin())
+                while(marker >= Template.begin())
                 {
                     if(*marker == '$' && *std::next(marker) == '(')
                     {

@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 {
     Ame::MapTable mapTable;
     mapTable.Add("victor", "pascual");
-    std::string o = Ame::TemplateRenderer::Render("El $(victor) vale pico!", mapTable);
+    std::string o = Ame::TemplateRenderer::Render("$(victor)", mapTable);
     std::cout << o << std::endl;
     mapTable.Add("pascual", "victor");
     mapTable.Add("feo", "hermoso");
