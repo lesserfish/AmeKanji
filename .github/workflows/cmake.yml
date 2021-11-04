@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install requirements
-      run: sudo apt-get install libpugixml-dev libcurl-gnutils-dev
+      run: sudo apt-get install libpugixml-dev
     - name: Create Build directory
       run: mkdir ${{github.workspace}}/build
       
