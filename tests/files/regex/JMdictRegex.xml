@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><JMdict><ent_seq><RegInstruction><OP>R</OP><Instruction>2</Instruction><Argument>4</Argument></RegInstruction></ent_seq>
+<gloss>
+<RegInstruction>
+<OP>R</OP>
+<Instruction>o</Instruction>
+<Argument>VICTOR</Argument>
+</RegInstruction>
+<RegInstruction>
+<OP>R</OP>
+<Instruction>.*R</Instruction>
+<Argument>Pascual</Argument>
+</RegInstruction>
+</gloss></JMdict>

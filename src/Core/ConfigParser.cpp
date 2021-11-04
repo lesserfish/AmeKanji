@@ -204,6 +204,8 @@ namespace Core
             if (arg->required == true)
                 return configParseOutput::cpo_MISSING_REQUIRED_PARAMETER;
         }
+
+        return 0;
     }
         
 }

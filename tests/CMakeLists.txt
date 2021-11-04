@@ -9,10 +9,12 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-set(SOURCE_FILES test_main.cpp test_second.cpp)
+find_library(PugiXML NAMES pugixml REQUIRED)
+
+set(SOURCE_FILES test_main.cpp test_jisho.cpp)
 add_executable(TEST ${SOURCE_FILES})
 
-target_link_libraries(TEST gtest_main Ame Core)
+target_link_libraries(TEST gtest_main Ame Core ${PugiXML})
 
 include(GoogleTest)
-gtest_discover_tests(TEST)
+gtest_discover_tests(TEST WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tests)
