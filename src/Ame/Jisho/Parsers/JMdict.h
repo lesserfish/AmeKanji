@@ -13,10 +13,10 @@ namespace Ame
     {
         public:
             JMdict();
-            static ame_result getInformation(Word &output, std::string dictionary, std::vector<std::string> Input = {}, std::vector<std::string> Args = {});
-            static ame_result getInformationXML(Word &output, pugi::xml_document &XMLDoc, std::vector<std::string> Input = {}, std::vector<std::string> Args = {}); 
-            static ame_result applyRegex(Word &input, std::string Regex, std::vector<std::string> Args = {});
-            static ame_result applyRegexXML(Word &input, pugi::xml_document &Regex, std::vector<std::string> Args = {});
+            static ame_result getInformation(Word &output, std::string& dictionary, std::vector<std::string> Input = {}, std::vector<std::string> Args = {});
+            static ame_result getInformationXML(Word &output, pugi::xml_document& XMLDoc, std::vector<std::string> Input = {}, std::vector<std::string> Args = {}); 
+            static ame_result applyRegex(Word &input, std::string& Regex, std::vector<std::string> Args = {});
+            static ame_result applyRegexXML(Word &input, pugi::xml_document& Regex, std::vector<std::string> Args = {});
         private:
             static ame_result getWordInformation(Word &output, std::string Kanji, pugi::xml_document& XMLDoc, std::vector<std::string> Args = {});
             static ame_result getWordInformation(Word &output, std::string Kanji, std::string Katakana, pugi::xml_document& XMLDoc, std::vector<std::string> Args = {});

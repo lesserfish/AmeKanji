@@ -12,6 +12,8 @@ namespace Ame
         public:
             friend std::ostream& operator<<(std::ostream& os, const Word& w);
             std::string RenderTemplate(std::string Template);
+            std::string RenderTemplate(std::string Template, MapTable additionalTable);
+            std::string RenderTemplate(std::string Template, std::vector<MapTable> additionalTables);
             std::string Print() const;
             Word(){}
             ~Word(){}

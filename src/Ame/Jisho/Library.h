@@ -30,13 +30,13 @@ namespace Ame
     {
         public:
             AmeLibrary(AmeConfig &config) : configInstance(config), 
-                                                parserFunction([=](K& k, std::string str, std::vector<std::string> s1, std::vector<std::string>s2){
+                                                parserFunction([=](K& k, std::string& str, std::vector<std::string> s1, std::vector<std::string>s2){
                                                     return ame_result(false, statusCode::ERR, "No parser given!");
                                                 }),
                                                 parserXMLFunction([=](K& k, pugi::xml_document&, std::vector<std::string> s1, std::vector<std::string>s2){
                                                     return ame_result(false, statusCode::ERR, "No parser given!");
                                                 }),
-                                                regexParserFunction([=](K& k, std::string, std::vector<std::string>){
+                                                regexParserFunction([=](K& k, std::string&, std::vector<std::string>){
                                                     return ame_result(false, statusCode::ERR, "No regex parser given!");
                                                 }),
                                                 regexParserXMLFunction([=](K& k, pugi::xml_document&, std::vector<std::string>){
@@ -52,14 +52,14 @@ namespace Ame
             inline ame_result Load(){
                 return ame_result();
             }
-            inline ame_result loadParserManually(std::function < ame_result(K&, std::string, std::vector<std::string>, std::vector<std::string>) > func)            {
+            inline ame_result loadParserManually(std::function < ame_result(K&, std::string&, std::vector<std::string>, std::vector<std::string>) > func){
                 parserMode = ParserMode::Unkown;
                 parserInput = ParserInput::TXT;
                 parserFunction = func;
                 
                 return ame_result();
             }
-            inline ame_result loadParserManually(std::function < ame_result(K&, pugi::xml_document&, std::vector<std::string>, std::vector<std::string>) > func)            {
+            inline ame_result loadParserManually(std::function < ame_result(K&, pugi::xml_document&, std::vector<std::string>, std::vector<std::string>) > func){
                 parserMode = ParserMode::Unkown;
                 parserInput = ParserInput::XML;
                 parserXMLFunction = func;
@@ -81,13 +81,13 @@ namespace Ame
 
                 return ame_result(false, statusCode::ERR, "Failed to find the Parser given the configuration!");
             }
-            inline ame_result loadRegexParserManually(std::function < ame_result(K&, std::string, std::vector<std::string>) > func)
+            inline ame_result loadRegexParserManually(std::function < ame_result(K&, std::string&, std::vector<std::string>) > func)
             {
                 regexMode = RegexMode::Unknown;
                 regexParserFunction = func;
                 return ame_result(true, statusCode::OK);
             }
-            inline ame_result loadRegexParserManually(std::function < ame_result(K&, pugi::xml_document &, std::vector<std::string>) > func)
+            inline ame_result loadRegexParserManually(std::function < ame_result(K&, pugi::xml_document&, std::vector<std::string>) > func)
             {
                 regexMode = RegexMode::Unknown;
                 regexParserXMLFunction = func;
@@ -109,7 +109,11 @@ namespace Ame
 
             // Invoking functions
 
-            inline ame_result invokeParser(K& output, std::string dict, std::vector<std::string> input = {}, std::vector<std::string> args = {}, bool includeDictionaryArgs = false){
+            inline ame_result invokeParser(K& output, const char *dict, std::vector<std::string> input = {}, std::vector<std::string> args = {}, bool includeDictionaryArgs = false){
+                std::string dict_str = std::string(dict);
+                return invokeParser(output, dict_str, input, args, includeDictionaryArgs);
+            }
+            inline ame_result invokeParser(K& output, std::string& dict, std::vector<std::string> input = {}, std::vector<std::string> args = {}, bool includeDictionaryArgs = false){
                 addArgs(args);
                 if(includeDictionaryArgs){
                     setDictionaryAutomatically();
@@ -130,7 +134,7 @@ namespace Ame
 
                 return parserFunction(output, dictionaryOptions.Arg, input, args);
             }
-            inline ame_result invokeParser(K& output, pugi::xml_document &dict, std::vector<std::string> input = {}, std::vector<std::string> args = {}, bool includeDictionaryArgs = false){
+            inline ame_result invokeParser(K& output, pugi::xml_document& dict, std::vector<std::string> input = {}, std::vector<std::string> args = {}, bool includeDictionaryArgs = false){
                 addArgs(args);
                 if(includeDictionaryArgs){
                     setDictionaryAutomatically();
@@ -138,7 +142,7 @@ namespace Ame
                 }
                 return parserXMLFunction(output, dict, input, args);
             }
-            inline ame_result InvokeRegex(K& output, std::string Regex, std::vector<std::string> args)
+            inline ame_result InvokeRegex(K& output, std::string& Regex, std::vector<std::string> args)
             {
                 return regexParserFunction(output, Regex, args);
             }
@@ -198,10 +202,10 @@ namespace Ame
             RegexMode regexMode;
 
             AmeConfig& configInstance;
-            std::function<ame_result(K&, pugi::xml_document &, std::vector<std::string>, std::vector<std::string>)> parserXMLFunction;
-            std::function<ame_result(K&, std::string, std::vector<std::string>, std::vector<std::string>)> parserFunction;
-            std::function<ame_result(K&, pugi::xml_document &, std::vector<std::string>)> regexParserXMLFunction;
-            std::function<ame_result(K&, std::string, std::vector<std::string>)> regexParserFunction;
+            std::function<ame_result(K&, pugi::xml_document&, std::vector<std::string>, std::vector<std::string>)> parserXMLFunction;
+            std::function<ame_result(K&, std::string& , std::vector<std::string>, std::vector<std::string>)> parserFunction;
+            std::function<ame_result(K&, pugi::xml_document& , std::vector<std::string>)> regexParserXMLFunction;
+            std::function<ame_result(K&, std::string&, std::vector<std::string>)> regexParserFunction;
             
             struct DictionaryOptions {
                 std::string Mode;
