@@ -22,6 +22,19 @@ namespace Ame
         }
         return Variable();
     }
+    int MapTable::getValue(Variable &v, std::string var)
+    {
+        std::map<Identifier, Variable>::iterator it = Table.find(var);
+        if(it != Table.end()){
+            Variable v = it->second;
+            return 0;
+        }
+        return -1;
+    }
+    std::map<std::string, Variable> MapTable::getMap()
+    {
+        return Table;
+    }
     int MapTable::Add(Identifier var, Variable val)
     {
         std::map<Identifier, Variable>::iterator it = Table.find(var);
@@ -36,6 +49,12 @@ namespace Ame
     {
         Variable v(val);
         return Add(var, v);
+    }
+    int MapTable::Add(MapTable table)
+    {
+        std::map<std::string, Variable> tablemap = table.getMap();
+        Table.insert(tablemap.begin(), tablemap.end());
+        return 0;
     }
 
     int TemplateRenderer::Delete(std::string s)
@@ -71,6 +90,57 @@ namespace Ame
         if(it == MapTableArray.end())
             return "";
         return Render(Template, it->second);
+    }
+    std::string TemplateRenderer::Render(std::string Template, std::vector<std::string> tableNames)
+    {
+        std::vector<MapTable> mapTables;
+        for(std::string& s : tableNames)
+        {
+            std::map<Identifier, MapTable>::iterator it = MapTableArray.find(s);
+            if(it == MapTableArray.end())
+                continue;
+            mapTables.push_back(it->second);
+        }
+        return TemplateRenderer::Render(Template, mapTables);
+    }
+    std::string TemplateRenderer::RenderAll(std::string Template)
+    {
+        std::vector<MapTable> mapTables;
+        for(std::pair<Identifier, MapTable> it : MapTableArray)
+        {
+            mapTables.push_back(it.second);
+        }
+        return TemplateRenderer::Render(Template, mapTables);
+    }
+    std::string TemplateRenderer::RenderAll(std::string Template, MapTable tableName)
+    {
+        std::vector<MapTable> mapTables;
+        mapTables.push_back(tableName);
+        for(std::pair<Identifier, MapTable> it : MapTableArray)
+        {
+            mapTables.push_back(it.second);
+        }
+        return TemplateRenderer::Render(Template, mapTables);
+    }
+    std::string TemplateRenderer::RenderAll(std::string Template, std::vector<MapTable> tableNames)
+    {
+        std::vector<MapTable> mapTables = tableNames;
+        for(std::pair<Identifier, MapTable> it : MapTableArray)
+        {
+            mapTables.push_back(it.second);
+        }
+        return TemplateRenderer::Render(Template, mapTables);
+    }
+    
+    //static
+    std::string TemplateRenderer::Render(std::string Template, std::vector<MapTable> mapTables)
+    {
+        MapTable mergedTable;
+        for(MapTable& table : mapTables)
+        {
+            mergedTable.Add(table);
+        }
+        return TemplateRenderer::Render(Template, mergedTable);
     }
     std::string TemplateRenderer::Render(std::string Template, MapTable mapTable)
     {
