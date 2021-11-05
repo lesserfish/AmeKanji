@@ -8,6 +8,8 @@ namespace Ame
         std::string output = "";
         return output;
     }
+    std::string Word::RenderTemplate(std::string Template, MapTable additionalTable){return "";}
+    std::string Word::RenderTemplate(std::string Template, std::vector<MapTable> additionalTables){return "";}
     std::string Word::Print() const
     {
         std::string output;
