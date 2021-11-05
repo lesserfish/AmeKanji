@@ -11,11 +11,14 @@ TEST(JishoLibrary, InvokeRegexParserManually_XML)
 {
     // Load dictionary from pugi::xml_document
     
+    std::string DictionaryFile = "./files/dictionary/JMdict.xml";
+    std::string RegexFile = "./files/regex/JMdictRegex.xml";
+
     pugi::xml_document DictXMLDoc;
-    DictXMLDoc.load_file("./files/dictionary/JMdict.xml"); 
+    DictXMLDoc.load_file(DictionaryFile.c_str()); 
 
     pugi::xml_document RegexXMLDoc;
-    RegexXMLDoc.load_file("./files/regex/JMdictRegex.xml");
+    RegexXMLDoc.load_file(RegexFile.c_str());
 
     Ame::AmeConfig configInstace;
     Ame::AmeLibrary<Ame::Word> lib(configInstace);
@@ -45,9 +48,12 @@ TEST(JishoLibrary, InvokeRegexParserManually_XML)
 TEST(JishoLibrary, InvokeParserManually_XML)
 {
     // Load dictionary from pugi::xml_document
-
+    
+    std::string DictionaryFile = "./files/dictionary/JMdict.xml";
+    std::string RegexFile = "./files/regex/JMdictRegex.xml";
+    
     pugi::xml_document DictXMLDoc;
-    DictXMLDoc.load_file("./files/dictionary/JMdict.xml");
+    DictXMLDoc.load_file(DictionaryFile.c_str());
     
     Ame::AmeConfig configInstace;
     Ame::AmeLibrary<Ame::Word> lib(configInstace);
@@ -76,6 +82,9 @@ TEST(JishoLibrary, InvokeParserManually_XML)
 
 TEST(JishoLibrary, InvokeRegexParserManually_Path)
 {
+    std::string DictionaryFile = "./files/dictionary/JMdict.xml";
+    std::string RegexFile = "./files/regex/JMdictRegex.xml";
+    
     // Load dictionary from file dir
     Ame::AmeConfig configInstace;
     Ame::AmeLibrary<Ame::Word> lib(configInstace);
@@ -85,8 +94,8 @@ TEST(JishoLibrary, InvokeRegexParserManually_Path)
     Ame::ame_result output_A = lib.loadParserManually(Ame::JMdict::getInformation);
     Ame::ame_result output_B = lib.loadRegexParserManually(Ame::JMdict::applyRegex);
 
-    Ame::ame_result output_C = lib.invokeParser(word, "./files/dictionary/JMdict.xml", {"食べる"}, {});
-    Ame::ame_result output_D = lib.InvokeRegex(word, "./files/regex/JMdictRegex.xml", {});
+    Ame::ame_result output_C = lib.invokeParser(word, DictionaryFile, {"食べる"}, {});
+    Ame::ame_result output_D = lib.InvokeRegex(word, RegexFile, {});
 
     EXPECT_EQ(output_A.OK, true);
     EXPECT_EQ(output_B.OK, true);
@@ -110,7 +119,7 @@ TEST(JishoLibrary, InvokeParserManually_Path)
     Ame::Word word;
 
     Ame::ame_result output_A = lib.loadParserManually(Ame::JMdict::getInformation);
-    Ame::ame_result output_B = lib.invokeParser(word, "./files/dictionary/JMdict.xml", {"食べる"});
+    Ame::ame_result output_B = lib.invokeParser(word, "./files/dictionary/JMdict.xml", {"食べる"}); // <- We can now also add dictionaries encoded directly!
 
     EXPECT_EQ(output_A.OK, true);
     EXPECT_EQ(output_B.OK, true);
@@ -130,6 +139,9 @@ TEST(JishoLibrary, InvokeParserManually_Path)
 
 TEST(JishoLibrary, LoadRegexParserAutomatically)
 {
+    std::string DictionaryFile = "./files/dictionary/JMdict.xml";
+    std::string RegexFile = "./files/regex/JMdictRegex.xml";
+    
     // Load both JMDict parser and JMDict Regex parser from configuration file
     Ame::AmeConfig configInstace;
     configInstace.Parser = "JMdict";
@@ -141,8 +153,8 @@ TEST(JishoLibrary, LoadRegexParserAutomatically)
     Ame::ame_result output_A = lib.loadParserAutomatically();
     Ame::ame_result output_B = lib.loadRegexParserAutomatically();
 
-    Ame::ame_result output_C = lib.invokeParser(word, "./files/dictionary/JMdict.xml", {"食べる"}, {});
-    Ame::ame_result output_D = lib.InvokeRegex(word, "./files/regex/JMdictRegex.xml", {});
+    Ame::ame_result output_C = lib.invokeParser(word, DictionaryFile, {"食べる"}, {});
+    Ame::ame_result output_D = lib.InvokeRegex(word, RegexFile, {});
 
     EXPECT_EQ(output_A.OK, true);
     EXPECT_EQ(output_B.OK, true);
@@ -159,6 +171,9 @@ TEST(JishoLibrary, LoadRegexParserAutomatically)
 } 
 TEST(JishoLibrary, LoadParserAutomatically)
 {
+    std::string DictionaryFile = "./files/dictionary/JMdict.xml";
+    std::string RegexFile = "./files/regex/JMdictRegex.xml";
+    
     // Load JMDict parsers from configuration file
     Ame::AmeConfig configInstace;
     configInstace.Parser = "JMdict";
@@ -169,7 +184,7 @@ TEST(JishoLibrary, LoadParserAutomatically)
     Ame::Word word;
 
     Ame::ame_result output_A = lib.loadParserAutomatically();
-    Ame::ame_result output_B = lib.invokeParser(word, "./files/dictionary/JMdict.xml", {"食べる"});
+    Ame::ame_result output_B = lib.invokeParser(word, DictionaryFile, {"食べる"});
 
     EXPECT_EQ(output_A.OK, true);
     EXPECT_EQ(output_B.OK, true);

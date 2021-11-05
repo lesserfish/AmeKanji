@@ -39,7 +39,7 @@ namespace Ame
     JMdict::JMdict() : Dictionary(){}
 
 
-    ame_result JMdict::getInformation(Word &output, std::string dictionary, std::vector<std::string> Input, std::vector<std::string> Args)
+    ame_result JMdict::getInformation(Word &output, std::string& dictionary, std::vector<std::string> Input, std::vector<std::string> Args)
     {
         pugi::xml_document XMLDoc;
 
@@ -439,7 +439,7 @@ namespace Ame
         }
         return o;
     }
-    ame_result JMdict::applyRegex(Word &input, std::string Regex, std::vector<std::string> Args)
+    ame_result JMdict::applyRegex(Word &input, std::string& Regex, std::vector<std::string> Args)
     {
         pugi::xml_document XMLDoc;
         ame_result r;
@@ -461,7 +461,7 @@ namespace Ame
 
         return applyRegexXML(input, XMLDoc, Args);
     }
-    ame_result JMdict::applyRegexXML(Word &input, pugi::xml_document &Regex, std::vector<std::string> Args)
+    ame_result JMdict::applyRegexXML(Word &input, pugi::xml_document& Regex, std::vector<std::string> Args)
     {
         // Ent Seq
 
