@@ -11,7 +11,7 @@ enable_testing()
 
 find_library(PugiXML NAMES pugixml REQUIRED)
 
-set(SOURCE_FILES test_template.cpp test_librarian.cpp test_eventchain.cpp)
+set(SOURCE_FILES test_template.cpp test_librarian.cpp test_eventchain.cpp test_regex.cpp)
 add_executable(TEST ${SOURCE_FILES})
 
 target_link_libraries(TEST gtest_main Ame Core ${PugiXML})

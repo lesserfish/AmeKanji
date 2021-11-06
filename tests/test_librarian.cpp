@@ -25,22 +25,21 @@ TEST(Librarian, AutomaticJMdict)
     Ame::Word w;
     
     auto p1 = Ame::Librarian<Ame::Word, Ame::Parser::JMdict, std::shared_ptr<pugi::xml_document>>::RetrieveParser(XML_Doc);
-    auto p2 = Ame::Librarian<Ame::Word, Ame::Parser::JMdictRegex, std::shared_ptr<pugi::xml_document>>::RetrieveParser(RegXML_Doc);
 
     Ame::EventChain<Ame::Word> chain;
     
     chain.RegisterChain(p1);
-    chain.RegisterChain(p2);
     
     Ame::ame_result out = chain.Call(w, {"食べる"});
+
 
     std::string word_ent_seq = w.ent_seq.value;
     std::string word_first_gloss = w.SENSE_List[0].GLOSS_List[0].value;
     std::string word_second_gloss = w.SENSE_List[1].GLOSS_List[0].value;
 
-    EXPECT_STREQ(word_ent_seq.c_str(), "1358480");
-    EXPECT_STREQ(word_first_gloss.c_str(), "Pascual eat");
-    EXPECT_STREQ(word_second_gloss.c_str(), "Pascualn (e.g. a salary)");
+    EXPECT_STREQ(word_ent_seq.c_str(), "1358280");
+    EXPECT_STREQ(word_first_gloss.c_str(), "to eat");
+    EXPECT_STREQ(word_second_gloss.c_str(), "to live on (e.g. a salary)");
 
 }
 TEST(Librarian, AutomaticJMdictRegex)
