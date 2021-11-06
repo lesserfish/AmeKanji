@@ -2,7 +2,6 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <boost/tokenizer.hpp>
 #include "ConfigParser.h"
 
 namespace Core
