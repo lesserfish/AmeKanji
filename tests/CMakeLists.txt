@@ -9,7 +9,7 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-find_library(PugiXML NAMES pugixml REQUIRED)
+#find_library(PugiXML NAMES pugixml REQUIRED)
 
 set(SOURCE_FILES test_template.cpp test_librarian.cpp test_eventchain.cpp test_regex.cpp)
 add_executable(TEST ${SOURCE_FILES})
