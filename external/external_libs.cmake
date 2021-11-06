@@ -22,12 +22,12 @@ set(PugiXML pugixml)
 # Get libCurl
 
 
-find_library(curl curl)
+find_library(libcurl libcurl)
 
-if(NOT curl)
+if(NOT libcurl)
     include(FetchContent)
     FetchContent_Populate(
-        curl
+        libcurl
 
         GIT_REPOSITORY https://github.com/curl/curl.git
         GIT_TAG c7aef0a945f9b6fb6d3f91716a21dfe2f4ea635f
@@ -37,7 +37,7 @@ if(NOT curl)
     )
 
     add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/external_libs/Curl)
-    link_directories(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR}/external_libs/Curl/libs/)
+    link_directories(${CMAKE_CURRENT_BINARY_DIR}/external_libs/Curl/libs/)
     include_directories(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR}/external_libs/Curl/include)
 endif()
 set(Curl libcurl)
