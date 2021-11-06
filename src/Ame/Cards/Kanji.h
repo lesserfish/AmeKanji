@@ -140,12 +140,17 @@ namespace Ame
 
             struct MEDIA
             {
+                struct DefaultMedia
+                {
+                    std::string value;
+                };
                 struct RADICAL
                 {
                     std::string value;
                 };
 
                 RADICAL Radical;
+                std::vector<DefaultMedia> DefaultMedia_List;
             };
 
             MEDIA Media;

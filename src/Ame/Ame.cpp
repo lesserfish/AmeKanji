@@ -1,6 +1,5 @@
 #include "Ame.h"
 #include <iostream>
-#include "Jisho/Library.h"
 
 namespace Ame
 {

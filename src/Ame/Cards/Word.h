@@ -74,11 +74,16 @@ namespace Ame
 
             struct MEDIA
             {
+                struct DefaultMedia
+                {
+                    std::string value;
+                };
                 struct AUDIO
                 {
                     std::string value;
                 };
                 AUDIO Audio;
+                std::vector<DefaultMedia> DefaultMedia_List;
             };
             
             MEDIA Media;

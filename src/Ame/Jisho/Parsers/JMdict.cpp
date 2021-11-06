@@ -39,7 +39,7 @@ namespace Ame
     JMdict::JMdict() : Dictionary(){}
 
 
-    ame_result JMdict::getInformation(Word &output, std::string& dictionary, std::vector<std::string> Input, std::vector<std::string> Args)
+    ame_result JMdict::getInformation(Word &output, std::vector<std::string> Input, std::string& dictionary, std::vector<std::string> Args)
     {
         pugi::xml_document XMLDoc;
 
@@ -69,17 +69,18 @@ namespace Ame
             return getWordInformation(output, Input[0], Input[1], XMLDoc, Args); 
     }
 
-    ame_result JMdict::getInformationXML(Word &output, pugi::xml_document& XMLDoc, std::vector<std::string> Input, std::vector<std::string> Args)
+    ame_result JMdict::getInformationXML(Word &output, std::vector<std::string> Input, std::shared_ptr<pugi::xml_document> XMLDoc, std::vector<std::string> Args)
     {
         if(Input.size() < 1) 
             return ame_result{false, statusCode::parser_ERR_MISSING_ARGUMENTS, "Missing arguments! Please provide the kanji of the required word!"};
         else if(Input.size() == 1)
-            return getWordInformation(output, Input[0], XMLDoc, Args);
+            return getWordInformation(output, Input[0], *XMLDoc, Args);
         else
-            return getWordInformation(output, Input[0], Input[1], XMLDoc, Args); 
+            return getWordInformation(output, Input[0], Input[1], *XMLDoc, Args); 
     }
 
     ame_result JMdict::getWordInformation(Word &output, std::string Kanji, pugi::xml_document& XMLDoc, std::vector<std::string> Args){
+        
         
         ame_result o{false, statusCode::parser_ERR_MISSING_VALUE, "Error! Failed to find the provided word."};
         
@@ -439,33 +440,33 @@ namespace Ame
         }
         return o;
     }
-    ame_result JMdict::applyRegex(Word &input, std::string& Regex, std::vector<std::string> Args)
+    ame_result JMdict::applyRegex(Word &output, std::vector<std::string> Input, std::string& Regex, std::vector<std::string> Args)
     {
-        pugi::xml_document XMLDoc;
+        std::shared_ptr<pugi::xml_document> XMLDoc(new pugi::xml_document);
         ame_result r;
         if(Args.size() < 1)
         {
-            r = loadDictionaryFromFile(XMLDoc, Regex);
+            r = loadDictionaryFromFile(*XMLDoc, Regex);
         }
         else
         {
             if(Args[0] == "file")
-                r = loadDictionaryFromFile(XMLDoc, Regex);
+                r = loadDictionaryFromFile(*XMLDoc, Regex);
             else if(Args[0] == "string")
-                r = loadDictionaryFromString(XMLDoc, Regex);
+                r = loadDictionaryFromString(*XMLDoc, Regex);
             else
-                r = loadDictionaryFromFile(XMLDoc, Regex);
+                r = loadDictionaryFromFile(*XMLDoc, Regex);
         }
         if(!r.OK)
                 return r;
 
-        return applyRegexXML(input, XMLDoc, Args);
+        return applyRegexXML(output, Input, XMLDoc, Args);
     }
-    ame_result JMdict::applyRegexXML(Word &input, pugi::xml_document& Regex, std::vector<std::string> Args)
+    ame_result JMdict::applyRegexXML(Word &input, std::vector<std::string> Input, std::shared_ptr<pugi::xml_document> Regex, std::vector<std::string> Args)
     {
         // Ent Seq
 
-        pugi::xml_node root = Regex.child(regex_root_name);
+        pugi::xml_node root = Regex->child(regex_root_name);
         pugi::xml_node ent_seq_node = root.child("ent_seq");
         pugi::xml_node r_ele_node = root.child(regex_r_ele_name);
         pugi::xml_node reb_node = root.child(regex_reb_name);
