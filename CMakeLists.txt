@@ -11,6 +11,7 @@ FetchContent_Populate(
     pugixml
 
     GIT_REPOSITORY https://github.com/zeux/pugixml.git
+    GIT_TAG 08b3433180727ea2f78fe02e860a08471db1e03c
     SOURCE_DIR libs/PugiXML
 )
 
