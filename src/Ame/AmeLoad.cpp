@@ -139,7 +139,7 @@ namespace Ame
         return output;
     }
 
-    ame_result Ame::loadConfigurationFromXML(std::string Content, std::string rootnode)
+    ame_result Ame::loadConfigurationFromXML(std::string& Content, std::string rootnode)
     {
         
         ame_result output(true, statusCode::OK, "");
