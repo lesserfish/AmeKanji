@@ -6,7 +6,7 @@ add_subdirectory(Cards)
 
 include_directories(../Core)
 
-find_library(PugiXML NAMES pugixml REQUIRED)
+#find_library(PugiXML NAMES pugixml REQUIRED)
 
 add_library(Ame SHARED ${SOURCE_FILES})
 

@@ -10,6 +10,8 @@ namespace Ame
     {
         public:
             std::string RenderTemplate(std::string Template);
+            std::string RenderTemplate(std::string Template, MapTable additionalTable);
+            std::string RenderTemplate(std::string Template, std::vector<MapTable> additionalTables);
             std::string Print() const;
         public:
             struct LITERAL
@@ -138,12 +140,17 @@ namespace Ame
 
             struct MEDIA
             {
+                struct DefaultMedia
+                {
+                    std::string value;
+                };
                 struct RADICAL
                 {
                     std::string value;
                 };
 
                 RADICAL Radical;
+                std::vector<DefaultMedia> DefaultMedia_List;
             };
 
             MEDIA Media;
