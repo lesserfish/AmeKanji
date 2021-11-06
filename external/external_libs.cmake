@@ -22,9 +22,9 @@ set(PugiXML pugixml)
 # Get libCurl
 
 
-find_library(libcurl libcurl)
+find_library(curl curl)
 
-if(NOT libcurl)
+if(NOT curl)
     include(FetchContent)
     FetchContent_Populate(
         libcurl
