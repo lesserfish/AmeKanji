@@ -37,6 +37,7 @@ if(NOT curl)
     )
 
     add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/external_libs/Curl)
+    link_directories(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR}/external_libs/Curl/libs/)
     include_directories(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR}/external_libs/Curl/include)
 endif()
 set(Curl libcurl)
