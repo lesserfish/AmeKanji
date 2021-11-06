@@ -51,10 +51,12 @@ namespace Core
 
                         while(std::regex_search(T, match, currentRegex))
                         {
-                            for(auto result: match)
+                            if(match.size()> 0)
+                                updatedOutput.push_back(match[0]);
+                            /*for(auto result: match)
                             {
                                 updatedOutput.push_back(result);
-                            }
+                            }*/
                             T = match.suffix().str();
                         }
                         break;
