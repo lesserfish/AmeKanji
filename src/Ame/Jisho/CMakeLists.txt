@@ -1,4 +1,4 @@
-file(GLOB SOURCE_FILES "Library.cpp" "Dictionary.cpp")
+file(GLOB SOURCE_FILES "Dictionary.cpp")
 
 add_subdirectory(Parsers)
 
