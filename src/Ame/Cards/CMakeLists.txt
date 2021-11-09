@@ -1,4 +1,4 @@
-file(GLOB SOURCE_FILES "Kanji.cpp" "Word.cpp")
+file(GLOB SOURCE_FILES "Kanji.cpp" "Word.cpp" "Default.cpp")
 
 add_subdirectory(Template)
 
