@@ -37,7 +37,7 @@ TEST(EventChain, ChainLinkCall)
 
     EXPECT_STREQ(t3.Message.c_str(), "Hello");
     EXPECT_STREQ(t4.Message.c_str(), "Hola");
-} 
+}
 
 TEST(EventChain, EventChainCall)
 {
@@ -59,9 +59,9 @@ TEST(EventChain, EventChainCall)
 TEST(EventChain, JMdictCall)
 {
     std::shared_ptr<pugi::xml_document> XML_Doc(new pugi::xml_document());
-    
+
     XML_Doc->load_file("./files/dictionary/JMdict.xml");
-    
+
     Ame::Word word;
     auto q = Ame::ChainLink<Ame::Word>::Setup(&Ame::JMdict::getInformationXML, XML_Doc, std::vector<std::string>{});
 
@@ -74,15 +74,15 @@ TEST(EventChain, JMdictCall)
     EXPECT_STREQ(word_ent_seq.c_str(), "1358280");
     EXPECT_STREQ(word_first_gloss.c_str(), "to eat");
     EXPECT_STREQ(word_second_gloss.c_str(), "to live on (e.g. a salary)");
-} 
+}
 TEST(EventChain, JMdictRegexCall)
 {
     std::shared_ptr<pugi::xml_document> XML_Doc(new pugi::xml_document());
     std::shared_ptr<pugi::xml_document> RegXML_Doc(new pugi::xml_document());
-    
+
     XML_Doc->load_file("./files/dictionary/JMdict.xml");
     RegXML_Doc->load_file("./files/regex/JMdictRegex.xml");
-    
+
     Ame::Word word;
 
     auto q = Ame::ChainLink<Ame::Word>::Setup(&Ame::JMdict::getInformationXML, XML_Doc, std::vector<std::string>{});

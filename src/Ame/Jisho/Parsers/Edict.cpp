@@ -14,16 +14,16 @@ namespace Ame
         std::ifstream inputfile;
         inputfile.open(file, std::ios::in);
 
-        if(!inputfile.is_open())
+        if (!inputfile.is_open())
             ame_result(false, statusCode::ERR);
-        
+
         std::string content;
-        
+
         std::string Line;
-        while(inputfile)
+        while (inputfile)
         {
             std::getline(inputfile, Line);
-            content = content + Line + "\n";    
+            content = content + Line + "\n";
         }
 
         UTF8Doc = content;

@@ -4,8 +4,9 @@ namespace Ame
 {
     class AmeWeb
     {
-        public:
-            virtual ~AmeWeb() = 0;
-        private:
+    public:
+        virtual ~AmeWeb() = 0;
+
+    private:
     };
 }

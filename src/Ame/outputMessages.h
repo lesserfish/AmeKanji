@@ -7,11 +7,11 @@ namespace Ame
 {
     void Ame::AmePrint(std::string Content)
     {
-        if(configInstance.SplitStdout == "true")
+        if (configInstance.SplitStdout == "true")
         {
             std::istringstream iss(Content);
             std::string Line;
-            while(iss)
+            while (iss)
             {
                 iss >> Line;
                 stdout_callback(Line);

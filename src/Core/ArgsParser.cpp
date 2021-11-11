@@ -26,7 +26,7 @@ namespace Core
         int position = 0;
         while (++position < argc)
         {
-		std::string val = argv[position];
+            std::string val = argv[position];
 
             bool argFound = false;
             for (int i = 0; i < missingParameters.size(); i++)
@@ -38,7 +38,7 @@ namespace Core
                     {
                         if (++position >= argc)
                             return parseOutput::po_MISSING_INPUT;
-                        
+
                         arg->output = std::string(argv[position]);
                         missingParameters.erase(missingParameters.begin() + i);
                         argFound = true;
@@ -53,7 +53,7 @@ namespace Core
                     }
                 }
             }
-            if(!argFound & assertArgument)
+            if (!argFound & assertArgument)
                 return parseOutput::po_ADDITIONAL_PARAMETER_GIVEN;
         }
         for (int i = 0; i < missingParameters.size(); i++)
@@ -61,10 +61,10 @@ namespace Core
             Argument *arg = missingParameters.at(i);
             if (arg->required == true)
                 return parseOutput::po_MISSING_REQUIRED_PARAMETER;
-            if(arg->copyDefaultInput == true)
+            if (arg->copyDefaultInput == true)
                 arg->output = arg->defaultInput;
         }
-        
+
         return parseOutput::po_SUCCESS;
     }
 }

@@ -10,7 +10,7 @@ namespace Ame
     Ame::Ame(int argc, char **argv) : configInstance()
     {
         std::cout << "Ame Initialized!\n";
-        loadArgs(argc, argv);   
+        loadArgs(argc, argv);
     }
 
     ame_result Ame::Go()

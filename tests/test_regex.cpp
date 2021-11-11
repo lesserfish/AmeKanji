@@ -10,7 +10,7 @@ TEST(CoreLibrary, ParseRegexReplace)
 
     EXPECT_EQ(out.size(), 1);
     EXPECT_STREQ(out[0].c_str(), "asdyoloasd");
-} 
+}
 
 TEST(CoreLibrary, ParseRegexMatch_1)
 {
@@ -25,7 +25,7 @@ TEST(CoreLibrary, ParseRegexMatch_1)
     EXPECT_STREQ(out[3].c_str(), "subhuma");
     EXPECT_STREQ(out[4].c_str(), "subca");
     EXPECT_STREQ(out[5].c_str(), "suba");
-} 
+}
 
 TEST(CoreLibrary, ParseRegexMatch_2)
 {
@@ -40,7 +40,7 @@ TEST(CoreLibrary, ParseRegexMatch_2)
     EXPECT_STREQ(out[3].c_str(), "subhuma");
     EXPECT_STREQ(out[4].c_str(), "subca");
     EXPECT_STREQ(out[5].c_str(), "suba");
-} 
+}
 TEST(CoreLibrary, ParseRegexMatch_3)
 {
     Core::RegexInstruction i1(Core::regOP::MATCH, "[A-Z](\\w+)", "");
@@ -51,4 +51,4 @@ TEST(CoreLibrary, ParseRegexMatch_3)
     EXPECT_STREQ(out[0].c_str(), "Well");
     EXPECT_STREQ(out[1].c_str(), "Harry");
     EXPECT_STREQ(out[2].c_str(), "Potter");
-} 
+}

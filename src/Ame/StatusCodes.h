@@ -24,10 +24,10 @@ namespace Ame
 
     struct ame_result
     {
-        ame_result(): OK(true), value(statusCode::OK), Message(""){}
-        ame_result(bool ok) : OK(ok), value(statusCode::OK), Message(""){}
-        ame_result(bool ok, statusCode ec) : OK(ok), value(ec), Message(""){}
-        ame_result(bool ok, statusCode ec, std::string m) : OK(ok), value(ec), Message(m){}
+        ame_result() : OK(true), value(statusCode::OK), Message("") {}
+        ame_result(bool ok) : OK(ok), value(statusCode::OK), Message("") {}
+        ame_result(bool ok, statusCode ec) : OK(ok), value(ec), Message("") {}
+        ame_result(bool ok, statusCode ec, std::string m) : OK(ok), value(ec), Message(m) {}
         bool OK;
         statusCode value;
         std::string Message;

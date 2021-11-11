@@ -4,7 +4,7 @@ namespace Ame
 {
     class Template
     {
-        public:
-        private:
+    public:
+    private:
     };
 }

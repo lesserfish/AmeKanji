@@ -17,13 +17,12 @@ TEST(TemplateRenderer, RenderParser)
     std::string t4 = Ame::TemplateRenderer::Render("My name is $($(ONE)$(TWO))!", mapTable);
     std::string t5 = Ame::TemplateRenderer::Render("$(pascual)", mapTable);
 
-
     EXPECT_STREQ(t1.c_str(), "Mi nombre es victor y soy hermoso!");
     EXPECT_STREQ(t2.c_str(), "My password is Sharks123");
     EXPECT_STREQ(t3.c_str(), "MaybeTwoMore, i swear!");
     EXPECT_STREQ(t4.c_str(), "My name is victor!");
     EXPECT_STREQ(t5.c_str(), "victor");
-} 
+}
 
 TEST(TemplateRenderer, MultipleTables)
 {
@@ -33,7 +32,7 @@ TEST(TemplateRenderer, MultipleTables)
     T1.Add("pascual", "victor");
     T1.Add("one", "two");
     T2.Add("orange", "apple");
-    T2.Add("two","three");
+    T2.Add("two", "three");
 
     std::vector<Ame::MapTable> Tables;
     Tables.push_back(T1);
@@ -44,7 +43,6 @@ TEST(TemplateRenderer, MultipleTables)
 
     EXPECT_STREQ(o1.c_str(), "My name is victor and i like apple");
     EXPECT_STREQ(o2.c_str(), "I have three more car");
-
 }
 TEST(TemplateRenderer, NonstaticMethods)
 {
@@ -63,7 +61,6 @@ TEST(TemplateRenderer, NonstaticMethods)
     std::string t3 = renderer.Render("$(OneLastTest), i swear!", "firstTable");
     std::string t4 = renderer.Render("My name is $($(ONE)$(TWO))!", "firstTable");
     std::string t5 = renderer.Render("$(pascual)", "firstTable");
-
 
     EXPECT_STREQ(t1.c_str(), "Mi nombre es victor y soy hermoso!");
     EXPECT_STREQ(t2.c_str(), "My password is Sharks123");
@@ -97,6 +94,6 @@ TEST(TemplateRenderer, NonstaticMethods)
     fourthTable.Add("Dinosaurio!", "pop");
 
     std::string t11 = renderer.RenderAll("My password is $($(MyPasswordIs)) and I am $($($(pascual)))",
-                                            std::vector<Ame::MapTable>{newnewTable, fourthTable});
+                                         std::vector<Ame::MapTable>{newnewTable, fourthTable});
     EXPECT_STREQ(t11.c_str(), "My password is Sharks321 and I am pop");
 }

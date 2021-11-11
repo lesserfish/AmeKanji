@@ -4,7 +4,8 @@
 #include <string>
 #include <pugixml.hpp>
 
-namespace Core{
+namespace Core
+{
 
     enum configParseOutput
     {
@@ -16,16 +17,16 @@ namespace Core{
     };
     class ConfigParser
     {
-        public:
-            ConfigParser();
-            ~ConfigParser();
-            void generateArgument(std::string &output, std::string name, bool required = false);
-            int Parse(std::string file, std::string = "=", bool assertArgument = false);
-            int ParseFromString(std::string Content, std::string separator = "=", bool assertArgument = false);
-            int ParseFromXML(std::string rootNode, pugi::xml_document &XMLDoc, bool assertArgument = false);
-            int ParseFromXML(std::string rootNode, std::string XMLContent, bool assertArgument = false);
-        private:
+    public:
+        ConfigParser();
+        ~ConfigParser();
+        void generateArgument(std::string &output, std::string name, bool required = false);
+        int Parse(std::string file, std::string = "=", bool assertArgument = false);
+        int ParseFromString(std::string Content, std::string separator = "=", bool assertArgument = false);
+        int ParseFromXML(std::string rootNode, pugi::xml_document &XMLDoc, bool assertArgument = false);
+        int ParseFromXML(std::string rootNode, std::string XMLContent, bool assertArgument = false);
 
+    private:
         struct Argument
         {
             std::string &output;
@@ -33,7 +34,7 @@ namespace Core{
             bool required;
         };
 
-        std::vector<Argument*> argList;
+        std::vector<Argument *> argList;
         std::vector<std::string *> valList;
     };
 }

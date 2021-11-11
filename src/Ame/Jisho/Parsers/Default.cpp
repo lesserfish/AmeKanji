@@ -1,7 +1,7 @@
 #include "Default.h"
 
-
-namespace Ame{
+namespace Ame
+{
 
     ame_result DefaultParser::GetInformation(DefaultCard &output, std::vector<std::string> input, pugi::xml_document *XMLDoc, std::vector<std::string> Args)
     {
@@ -13,11 +13,11 @@ namespace Ame{
         output.Name = node.name();
         output.Value = node.value();
         output.Text = node.text().as_string();
-        for(auto it = node.attributes_begin(); it != node.attributes_end(); it++)
+        for (auto it = node.attributes_begin(); it != node.attributes_end(); it++)
         {
             output.Attributes.push_back(it->as_string());
         }
-        for(pugi::xml_node it = node.first_child(); it; it = it.next_sibling())
+        for (pugi::xml_node it = node.first_child(); it; it = it.next_sibling())
         {
             DefaultCard::Node childNode = GetNode(it);
             output.ChildNodes.push_back(childNode);

@@ -3,7 +3,8 @@
 #include <vector>
 #include <string>
 
-namespace Core{
+namespace Core
+{
 
     enum parseOutput
     {
@@ -14,23 +15,23 @@ namespace Core{
     };
     class ArgsParser
     {
-        public:
-            ArgsParser();
-            ~ArgsParser();
-            void generateArgument(std::string &output, std::string name, bool required = false, bool requiresInput = true, std::string defaultInput = "", bool copyDefaultInput = false);
-            int Parse(int argc, char **argv, bool assertArgument = false);
-        private:
+    public:
+        ArgsParser();
+        ~ArgsParser();
+        void generateArgument(std::string &output, std::string name, bool required = false, bool requiresInput = true, std::string defaultInput = "", bool copyDefaultInput = false);
+        int Parse(int argc, char **argv, bool assertArgument = false);
 
+    private:
         struct Argument
         {
             std::string &output;
-	    std::string name;
+            std::string name;
             bool required;
             bool requiresInput;
-	    std::string defaultInput;
+            std::string defaultInput;
             bool copyDefaultInput;
         };
 
-        std::vector<Argument*> argList;
+        std::vector<Argument *> argList;
     };
 }
