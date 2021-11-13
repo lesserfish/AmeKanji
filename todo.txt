@@ -1,10 +1,10 @@
 TODO:
 
-1 - Create a Template Class, alongside a static function to instantiate from a file / string XML file
+----1 - Create a Template Class, alongside a static function to instantiate from a file / string XML file
 2 - Create a method to load the input (Words or kanjis, and arguments) from an XML file or XML string and load them into a class AmeInput (or some other dumb name)
-3 - Create a Deck class, with a method to add a (Rendered) card into, given a template. That is: Input ( Card , Template ) -> RenderedCard -- (append to)--> Deck.
-    The method to render a Card given a template should occurr in the card itself. 
-    (?¿ Add the possibility to pass a SystemWide Map Table to the card, so that it can also render global level variables)
+---3 - Create a Deck class, with a method to add a (Rendered) card into, given a template. That is: Input ( Card , Template ) -> RenderedCard -- (append to)--> Deck.
+----    The method to render a Card given a template should occurr in the card itself. 
+----    (?¿ Add the possibility to pass a SystemWide Map Table to the card, so that it can also render global level variables)
 4 - Create the Web class, which should behave similarly to how the Parsers and the Regex are used. 
     In specific, we should pass a reference to a static function Web::GetMedia(Kard& kard, Args) to the Library class, so that it loads up.
     So far there should be two subclasses: One for Audio and one for KanjiStrokes. One should be able to create child subclasses of these in order to append 

@@ -1,15 +1,20 @@
-#include <pugixml.hpp>
+#include "Ame/Cards/Deck/Deck.h"
 #include <iostream>
-#include "Ame/Cards/Default.h"
-#include "Ame/Jisho/Parsers/Default.h"
+#include <string>
 
 int main(int argc, char **argv)
 {
-    pugi::xml_document XMLDoc;
-    XMLDoc.load_file("/home/vchavauty/Documents/Code/AmeKanji/file2.xml");
 
-    pugi::xml_node root = XMLDoc.first_child();
-    Ame::DefaultCard::Node node = Ame::DefaultParser::GetNode(root);
-    std::cout << node.Name << std::endl;
-    std::cout << Ame::DefaultCard::PrintNode(node, "\t");
+    Ame::RenderedCard rca({"Field One", "Field Two"});
+    Ame::RenderedCard rcn({"Fie One", "Fldo"});
+    Ame::RenderedCard rcc({"Fid One", "eld Two"});
+
+    Ame::Deck deck;
+    deck.Cards.push_back(rca);
+    deck.Cards.push_back(rcn);
+    deck.Cards.push_back(rcc);
+
+    deck.Render();
+    std::string result = deck.AsString();
+    std::cout << "output: " << result << std::endl;
 }

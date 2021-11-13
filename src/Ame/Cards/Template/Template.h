@@ -1,10 +1,14 @@
 #pragma once
 
+#include "../../StatusCodes.h"
+#include <string>
+#include <vector>
+#include <pugixml.hpp>
+
 namespace Ame
 {
     class Template
     {
-    public:
-    private:
+        std::vector<std::string> FieldList;
     };
 }
